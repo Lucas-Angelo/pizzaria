@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 
 // Import models
 const Usuario = require("../models/Usuario");
+const Pizza = require("../models/Pizza");
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -24,12 +25,13 @@ module.exports = {
             await sequelize.authenticate();
             // Models init
             Usuario.init(sequelize);
+            Pizza.init(sequelize);
 
             // Associations
 
             if (process.env.APP_DEBUG) {
                 console.log(
-                    `Conexão com o banco de dados '${process.env.DB_HOST}/${process.env.DB_NAME}' estabelecida`
+                    `Conexão com o banco de dados '${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}' estabelecida`
                 );
             }
         } catch (error) {

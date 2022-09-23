@@ -31,6 +31,7 @@ class UsuarioController {
             email: yup
                 .string("'email' must be string")
                 .email("'email' must be a email")
+                .min(1)
                 .max(60)
                 .required("'email' is a required field"),
             senha: yup

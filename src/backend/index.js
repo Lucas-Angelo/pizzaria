@@ -55,7 +55,7 @@ db.connect()
             const port = process.env.NODE_PUBLIC_PORT || 3001;
             app.listen(port, () => {
                 console.log(
-                    `API server on ---> http://${process.env.NODE_APP_HOST}:${port}`
+                    `Server on ---> http://${process.env.NODE_APP_HOST}:${port}/`
                 );
             });
         }
