@@ -34,7 +34,6 @@ class PizzaService {
                 `Pizza de 'descricao' ${descricao} já utilizada!`,
             ]);
 
-        console.log(descricao, tamanho, image_url);
         const pizza = await Pizza.create({
             descricao,
             tamanho,
