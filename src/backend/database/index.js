@@ -2,7 +2,7 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 
 // Import models
-// const Usuario = require("../models/Usuario");
+const Usuario = require("../models/Usuario");
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -11,6 +11,9 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         dialect: "mysql",
+        define: {
+            timestamps: false,
+        },
         logging: false,
     }
 );
@@ -20,7 +23,7 @@ module.exports = {
         try {
             await sequelize.authenticate();
             // Models init
-            // Usuario.init(sequelize);
+            Usuario.init(sequelize);
 
             // Associations
 

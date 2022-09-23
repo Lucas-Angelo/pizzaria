@@ -25,21 +25,22 @@ app.get("/", (req, res) => {
 db.connect()
     .then(() => {
         // eslint-disable-next-line no-unused-vars
-        app.use(function (erro, request, response, next) {
+        app.use(function (error, request, response, next) {
             // AppError
-            if (erro instanceof AppError) {
-                return response.status(erro.statusCode).json({
-                    message: erro.message,
-                    error: erro.error,
+            if (error instanceof AppError) {
+                return response.status(error.statusCode).json({
+                    message: error.message,
+                    error: error.error,
                 });
             }
 
             // Unknown error
             if (process.env.APP_DEBUG) {
+                console.log(error);
                 return response.status(500).json({
                     status: "Error",
-                    message: erro.message,
-                    stack: erro.stack,
+                    message: error.message,
+                    stack: error.stack,
                 });
             } else {
                 return response.status(500).json({
