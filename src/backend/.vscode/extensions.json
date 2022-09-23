@@ -1,0 +1,12 @@
+{
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"waderyan.nodejs-extension-pack",
+		"mikestead.dotenv",
+		"editorconfig.editorconfig",
+		"aaron-bond.better-comments",
+    "codezombiech.gitignore",
+    "eamodio.gitlens",
+	]
+}
