@@ -1,53 +1,53 @@
 {
-  "name": "pizzaria-backend",
-  "version": "1.0.0",
-  "description": "Node.js Rest API with Express, Sequelize and MySQL for Pizzaria application",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "express-async-errors": "^3.1.1",
-    "mysql2": "^2.3.3",
-    "sequelize": "^6.17.0",
-    "yup": "^0.32.11"
-  },
-  "devDependencies": {
-    "eslint": "^8.14.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.2",
-    "sequelize-cli": "^6.4.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Lucas-Angelo/pizzaria.git"
-  },
-  "keywords": [
-    "pizzaria",
-    "nodejs",
-    "express",
-    "restful",
-    "api",
-    "sequelize",
-    "yup",
-    "dotenv",
-    "mysql"
-  ],
-  "author": "Lucas-Angelo",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Lucas-Angelo/pizzaria/issues"
-  },
-  "homepage": "https://github.com/Lucas-Angelo/pizzaria#readme",
-  "contributors": [
-    {
-      "name": "Lucas Ângelo Oliveira Martins Rocha",
-      "email": "laomrocha@sga.pucminas.br",
-      "url": "https://lucasangelo.com"
-    }
-  ]
+    "name": "pizzaria-backend",
+    "version": "1.0.0",
+    "description": "Node.js Rest API with Express, Sequelize and MySQL for Pizzaria application",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "express-async-errors": "^3.1.1",
+        "mysql2": "^2.3.3",
+        "sequelize": "^6.17.0",
+        "yup": "^0.32.11"
+    },
+    "devDependencies": {
+        "eslint": "^8.14.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.6.2",
+        "sequelize-cli": "^6.4.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Lucas-Angelo/pizzaria.git"
+    },
+    "keywords": [
+        "pizzaria",
+        "nodejs",
+        "express",
+        "restful",
+        "api",
+        "sequelize",
+        "yup",
+        "dotenv",
+        "mysql"
+    ],
+    "author": "Lucas-Angelo",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Lucas-Angelo/pizzaria/issues"
+    },
+    "homepage": "https://github.com/Lucas-Angelo/pizzaria#readme",
+    "contributors": [
+        {
+            "name": "Lucas Ângelo Oliveira Martins Rocha",
+            "email": "laomrocha@sga.pucminas.br",
+            "url": "https://lucasangelo.com"
+        }
+    ]
 }
