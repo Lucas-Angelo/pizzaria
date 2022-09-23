@@ -4,6 +4,7 @@ const { Sequelize } = require("sequelize");
 // Import models
 const Usuario = require("../models/Usuario");
 const Pizza = require("../models/Pizza");
+const Pedido = require("../models/Pedido");
 
 const sequelize = new Sequelize(
     process.env.DB_NAME,
@@ -26,8 +27,13 @@ module.exports = {
             // Models init
             Usuario.init(sequelize);
             Pizza.init(sequelize);
+            Pedido.init(sequelize);
 
             // Associations
+            Pedido.belongsTo(Pizza, {
+                as: "pizza",
+                foreignKey: "pizza_id",
+            });
 
             if (process.env.APP_DEBUG) {
                 console.log(

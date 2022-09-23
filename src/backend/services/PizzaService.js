@@ -10,6 +10,7 @@ class PizzaService {
             },
             attributes: attributes,
         }).catch((error) => {
+            console.log(error);
             throw new AppError("Erro interno do servidor!", 500, error);
         });
 
