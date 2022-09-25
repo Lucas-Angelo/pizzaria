@@ -13,6 +13,9 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         dialect: "mysql",
+        dialectOptions: {
+            decimalNumbers: true,
+        },
         define: {
             timestamps: false,
         },
