@@ -2,6 +2,7 @@ const AppError = require("../errors/AppError");
 const Pedido = require("../models/Pedido");
 const { SortPaginate } = require("../helpers/SortPaginate");
 const PizzaService = require("../services/PizzaService");
+const Pizza = require("../models/Pizza");
 
 class PedidoService {
     async findById(id, attributes) {
@@ -103,7 +104,9 @@ class PedidoService {
 
         const pedidos = await Pedido.findAndCountAll({
             ...SortPaginateOptions,
+            include: [{ model: Pizza, as: "pizza" }],
         }).catch(function (error) {
+            console.log(error);
             throw new AppError("Erro interno do servidor!", 500, error);
         });
 

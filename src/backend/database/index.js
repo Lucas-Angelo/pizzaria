@@ -33,9 +33,12 @@ module.exports = {
             Pedido.init(sequelize);
 
             // Associations
-            Pedido.belongsTo(Pizza, {
-                as: "pizza",
+            Pizza.hasOne(Pedido, {
                 foreignKey: "pizza_id",
+            });
+            Pedido.belongsTo(Pizza, {
+                foreignKey: "pizza_id",
+                as: "pizza",
             });
 
             if (process.env.APP_DEBUG) {
