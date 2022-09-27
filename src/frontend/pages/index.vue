@@ -128,6 +128,7 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
               v-model="formData.cliente_nome"
+              id="txtClienteNome"
               :rules="[
                 (v) => !!v || 'Informe o nome do cliente!',
                 (v) =>
@@ -145,6 +146,7 @@
               no-data-text="Nenhuma pizza cadastrada..."
               item-text="descricao"
               item-value="id"
+              id="txtPizzaId"
             >
               <template v-slot:item="data">
                 <v-list-item-content>
@@ -159,6 +161,7 @@
             </v-autocomplete>
             <v-text-field
               v-model="formData.valor"
+              id="txtValor"
               :rules="[(v) => !!v || 'Preço é obrigatório!']"
               label="Preço"
               type="number"

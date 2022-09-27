@@ -72,6 +72,7 @@
               <v-text-field
                 v-if="!formData.id"
                 v-model="formData.descricao"
+                id="txtDescricao"
                 :rules="[
                   (v) => !!v || 'Nome é obrigatório!',
                   (v) =>
@@ -84,13 +85,18 @@
               <label>Tamanho</label>
               <br />
               <v-btn-toggle v-model="formDataTamanho">
-                <v-btn v-for="(t, tidx) in tamanhos" :key="tidx">
+                <v-btn
+                  v-for="(t, tidx) in tamanhos"
+                  :key="tidx"
+                  :id="'btnTamanho' + t"
+                >
                   {{ t }}
                 </v-btn>
               </v-btn-toggle>
               <br />
               <v-text-field
                 v-model="formData.image_url"
+                id="txtUrl"
                 :rules="[
                   (v) => !!v || 'URL da foto é obrigatório!',
                   (v) =>
