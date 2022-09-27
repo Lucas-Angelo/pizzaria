@@ -128,7 +128,12 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
               v-model="formData.cliente_nome"
-              :rules="[(v) => !!v || 'Informe o nome do cliente!',v => v.length <= 50 || 'Nome do cliente deve ter menos de 50 caracteres']"
+              :rules="[
+                (v) => !!v || 'Informe o nome do cliente!',
+                (v) =>
+                  (v && v.length <= 50) ||
+                  'Nome do cliente deve ter menos de 50 caracteres',
+              ]"
               label="Nome do Cliente"
               counter="50"
             />
