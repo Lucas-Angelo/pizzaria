@@ -174,7 +174,7 @@
 
           <v-btn text @click="dialog = false"> Cancelar </v-btn>
 
-          <v-btn color="primary" @click="submit"> Criar </v-btn>
+          <v-btn id="btnSubmit" color="primary" @click="submit"> Criar </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
