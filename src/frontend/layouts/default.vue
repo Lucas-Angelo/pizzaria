@@ -9,6 +9,7 @@
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
+          :id="'btnMenu'+i"
           :key="i"
           :to="item.to"
           router
@@ -28,7 +29,7 @@
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon id="btnOpenMenu" @click.stop="drawer = !drawer" />
       <img width="30px" src="/pizza.png" alt="">
       <v-toolbar-title class="app-title" v-text="title" />
       <v-spacer />

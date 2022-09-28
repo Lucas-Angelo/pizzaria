@@ -7,6 +7,7 @@
           <v-btn
             class="btn-new"
             color="success"
+            id="btnAddNewPizza"
             @click.stop="
               clearForm();
               dialog = true;
@@ -112,7 +113,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn text @click="dialog = false"> Cancelar </v-btn>
+            <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
 
             <v-btn color="primary" id="btnSubmit" @click="submit">
               {{ formData.id ? "Salvar" : "Criar" }}

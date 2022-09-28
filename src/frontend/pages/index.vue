@@ -7,6 +7,7 @@
           <v-btn
             class="btn-new"
             color="success"
+            id="btnAddNewOrder"
             @click.stop="
               clearForm();
               dialog = true;
@@ -146,7 +147,7 @@
               no-data-text="Nenhuma pizza cadastrada..."
               item-text="descricao"
               item-value="id"
-              id="txtPizzaId"
+              id="txtPizzaNome"
             >
               <template v-slot:item="data">
                 <v-list-item-content>
@@ -172,7 +173,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn text @click="dialog = false"> Cancelar </v-btn>
+          <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
 
           <v-btn id="btnSubmit" color="primary" @click="submit"> Criar </v-btn>
         </v-card-actions>
