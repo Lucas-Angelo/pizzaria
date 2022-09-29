@@ -62,7 +62,7 @@
 
                                     <v-card-actions class="text--secondary">
                                         Não possui cadastro?<a
-                                            href="/register"
+                                            href="/cadastro"
                                             class="pl-2"
                                             style="color: #f54c5a"
                                             >Crie sua conta</a
