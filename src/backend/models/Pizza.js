@@ -33,11 +33,22 @@ class Pizza extends Model {
                     allowNull: false,
                     notEmpty: true,
                 },
+                created_at: {
+                    type: DataTypes.DATE,
+                    field: "created_at",
+                },
+                updated_at: {
+                    type: DataTypes.DATE,
+                    field: "updated_at",
+                },
             },
             {
                 tableName: "pizza",
                 charset: "utf8mb4",
                 collate: "utf8mb4_bin",
+                createdAt: "created_at",
+                updatedAt: "updated_at",
+                timestamps: true,
                 sequelize,
             }
         );
