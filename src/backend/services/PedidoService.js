@@ -3,6 +3,7 @@ const Pedido = require("../models/Pedido");
 const { SortPaginate } = require("../helpers/SortPaginate");
 const PizzaService = require("../services/PizzaService");
 const Pizza = require("../models/Pizza");
+const { Op, Sequelize } = require("sequelize");
 
 class PedidoService {
     async findById(id, attributes) {
@@ -93,7 +94,31 @@ class PedidoService {
     }
 
     async getAll(query) {
+        const where = {};
         const attributes = Object.keys(Pedido.getAttributes());
+
+        // filter
+        if (query.status) where.status = query.status;
+        if (query.pizza_id) where.pizza_id = query.pizza_id;
+        if (query.cliente_nome){
+            where.cliente_nome = Sequelize.where(
+                Sequelize.fn(
+                    "LOWER",
+                    Sequelize.col("`Pedido`.`cliente_nome`")
+                ),
+                "LIKE",
+                "%" + query.cliente_nome.toLowerCase() + "%"
+            );
+        }
+        if (query.created_at_start || query.created_at_end) {
+            const startDate = query.created_at_start
+                ? new Date(query.created_at_start)
+                : new Date(null); // * new Date(null) == 1970
+            const endDate = query.created_at_end
+                ? new Date(query.created_at_end)
+                : new Date("2999/01/01");
+            where.created_at = { [Op.between]: [startDate, endDate] };
+        }
 
         const pedidoQuantity = await Pedido.count();
         const { paginas, ...SortPaginateOptions } = SortPaginate(
@@ -105,6 +130,7 @@ class PedidoService {
         const pedidos = await Pedido.findAndCountAll({
             ...SortPaginateOptions,
             include: [{ model: Pizza, as: "pizza" }],
+            where
         }).catch(function (error) {
             console.log(error);
             throw new AppError("Erro interno do servidor!", 500, error);
