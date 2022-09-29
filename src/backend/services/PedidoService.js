@@ -18,7 +18,7 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, valor, cliente_nome, pizza_id) {
+    async create(status, cliente_nome, pizza_id) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -28,7 +28,6 @@ class PedidoService {
 
         const pedido = await Pedido.create({
             status,
-            valor,
             cliente_nome,
             pizza_id,
         }).catch((error) => {
@@ -43,7 +42,7 @@ class PedidoService {
         return pedido;
     }
 
-    async update(id, status, valor, cliente_nome) {
+    async update(id, status, cliente_nome) {
         const pedido = await Pedido.findOne({
             where: {
                 id: id,
@@ -60,7 +59,6 @@ class PedidoService {
         await pedido
             .update({
                 status,
-                valor,
                 cliente_nome,
             })
             .catch((error) => {

@@ -21,12 +21,6 @@ class Pedido extends Model {
                     allowNull: false,
                     notEmpty: true,
                 },
-                valor: {
-                    field: "valor",
-                    type: DataTypes.DECIMAL(9).UNSIGNED,
-                    allowNull: false,
-                    notEmpty: true,
-                },
                 cliente_nome: {
                     field: "cliente_nome",
                     type: DataTypes.STRING(50),
