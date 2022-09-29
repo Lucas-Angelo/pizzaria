@@ -29,7 +29,7 @@ class PizzaService {
         return pizza;
     }
 
-    async create(descricao, tamanho, image_url) {
+    async create(descricao, valor, tamanho, image_url) {
         if (await this.findByDescricao(descricao))
             throw new AppError("Descrição já utilizada!", 422, [
                 `Pizza de 'descricao' ${descricao} já utilizada!`,
@@ -37,6 +37,7 @@ class PizzaService {
 
         const pizza = await Pizza.create({
             descricao,
+            valor,
             tamanho,
             image_url,
         }).catch((error) => {
@@ -51,7 +52,7 @@ class PizzaService {
         return pizza;
     }
 
-    async update(id, tamanho, image_url) {
+    async update(id, valor, tamanho, image_url) {
         const pizza = await Pizza.findOne({
             where: {
                 id: id,
@@ -68,6 +69,7 @@ class PizzaService {
         await pizza
             .update({
                 tamanho,
+                valor,
                 image_url,
             })
             .catch((error) => {

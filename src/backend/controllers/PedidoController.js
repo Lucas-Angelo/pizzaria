@@ -8,10 +8,6 @@ const pedidoStatusEnum = ["PENDENTE", "PRODUCAO", "CONCLUIDO"];
 class PedidoController {
     async create(request, response) {
         const scheme = yup.object().shape({
-            valor: yup
-                .number()
-                .positive()
-                .required("'valor' is a required field"),
             cliente_nome: yup
                 .string("'cliente_nome' must be string")
                 .min(1)
@@ -30,13 +26,12 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { valor, cliente_nome, pizza_id } = request.body;
+        const { cliente_nome, pizza_id } = request.body;
         const status = "PENDENTE";
 
         const pedidoService = new PedidoService();
         const pedido = await pedidoService.create(
             status,
-            valor,
             cliente_nome,
             pizza_id
         );
@@ -58,7 +53,6 @@ class PedidoController {
     async update(request, response) {
         const scheme = yup.object().shape({
             status: yup.mixed().oneOf(pedidoStatusEnum),
-            valor: yup.number().positive(),
             cliente_nome: yup
                 .string("'cliente_nome' must be string")
                 .min(1)
@@ -71,12 +65,12 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { status, valor, cliente_nome } = request.body;
+        const { status, cliente_nome } = request.body;
         const id = request.params.id;
 
         const pedidoService = new PedidoService();
 
-        await pedidoService.update(id, status, valor, cliente_nome);
+        await pedidoService.update(id, status, cliente_nome);
 
         return response.status(200).json({});
     }
