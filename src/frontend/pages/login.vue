@@ -20,6 +20,7 @@
                                     @submit.prevent="handleSubmit"
                                 >
                                     <v-text-field
+                                        id="txtEmail"
                                         v-model="email"
                                         label="Login"
                                         name="email"
@@ -32,6 +33,7 @@
                                     ></v-text-field>
 
                                     <v-text-field
+                                        id="txtSenha"
                                         ref="senha"
                                         v-model="senha"
                                         :error-messages="erroLogin"
@@ -50,6 +52,7 @@
                                     ></v-text-field>
 
                                     <v-btn
+                                        id="btnLogin"
                                         class="rounded-0 mt-2"
                                         color="#f54c5a"
                                         x-large

@@ -59,6 +59,11 @@ export default {
           icon: 'mdi-pizza',
           title: 'Pizzas',
           to: '/pizza'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Usuários',
+          to: '/usuarios'
         }
       ],
       title: 'Pizzaria Sem Nome'

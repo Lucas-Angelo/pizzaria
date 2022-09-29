@@ -2,7 +2,7 @@
     <!--Container-->
     <v-container class="fill-height" fluid>
         <v-row align="center" justify="center">
-            <v-col cols="12" sm="12" md="8" lg="6">
+            <v-col cols="12" sm="12" md="7" lg="6">
                 <v-card width="100%" style="padding: 2vh">
                     <v-card-title
                         ><h2><b>Cadastro</b></h2></v-card-title
@@ -10,12 +10,13 @@
 
                     <v-card-text
                         class="register-card-text"
-                        style="padding: 7vh"
+                        style="padding: 5vh"
                     >
                         <v-form ref="user" lazy-validation autocomplete="off">
                             <v-row>
                                 <v-col cols="12" sm="12">
                                     <v-text-field
+                                        id="txtEmail"
                                         v-model="user.email"
                                         dense
                                         hide-details="auto"
@@ -31,6 +32,7 @@
                                 <!--SENHA-->
                                 <v-col cols="12" sm="12">
                                     <v-text-field
+                                        id="txtSenha"
                                         v-model="user.senha"
                                         dense
                                         :append-icon="
@@ -51,32 +53,10 @@
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
-                            <v-row>
-                                <v-col cols="12" sm="12">
-                                    <v-text-field
-                                        v-model="user.confirmPassword"
-                                        dense
-                                        :append-icon="
-                                            show2 ? 'mdi-eye' : 'mdi-eye-off'
-                                        "
-                                        :rules="[
-                                            (value) =>
-                                                !!value ||
-                                                'Confirmar senha é obrigatório',
-                                            rules.equal,
-                                        ]"
-                                        :type="show2 ? 'text' : 'password'"
-                                        label="Confirme sua senha"
-                                        hint="Mínimo 8 caracteres"
-                                        hide-details="auto"
-                                        outlined
-                                        @click:append="show2 = !show2"
-                                    ></v-text-field>
-                                </v-col>
-                            </v-row>
                             <v-row class="mt-n3">
                                 <v-col cols="12" sm="12">
                                     <v-checkbox
+                                        id="checkbox"
                                         v-model="user.agree"
                                         :rules="[
                                             (v) =>
@@ -113,6 +93,7 @@
                         <v-row no-gutters>
                             <v-flex align-self-center>
                                 <v-btn
+                                id="btnCreateUser"
                                     large
                                     block
                                     color="#f54c5a"
@@ -149,16 +130,13 @@ export default {
             user: {
                 name: "",
                 senha: "",
-                confirmPassword: "",
                 agree: false,
             },
             rules: {
                 min: (v) => {
                     if (v && v.length >= 8) return true;
                     else return "Min 8 chars";
-                },
-                equal: (v) =>
-                    v === this.user.senha || "Senhas não são iguais",
+                }
             },
         };
     },
