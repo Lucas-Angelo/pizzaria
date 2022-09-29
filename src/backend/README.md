@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS `pizza`.`usuario` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(60) NOT NULL,
   `senha` VARCHAR(50) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -36,6 +38,8 @@ CREATE TABLE IF NOT EXISTS `pizza`.`pizza` (
   `descricao` VARCHAR(45) NOT NULL,
   `tamanho` ENUM('35CM', '45CM', '60CM') NOT NULL,
   `image_url` VARCHAR(200) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `descricao_UNIQUE` (`descricao` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -47,8 +51,10 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `pizza`.`pedido` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `status` ENUM('PENDENTE', 'PRODUCAO', 'CONCLUIDO') NOT NULL,
-  `valor` DECIMAL(9) UNSIGNED NOT NULL,
+  `valor` DECIMAL(9,2) UNSIGNED NOT NULL,
   `cliente_nome` VARCHAR(50) NOT NULL,
+  `created_at` TIMESTAMP NOT NULL,
+  `updated_at` TIMESTAMP NOT NULL,
   `pizza_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_pedido_pizza_idx` (`pizza_id` ASC) VISIBLE,
