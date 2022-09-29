@@ -160,6 +160,12 @@
                 </v-list-item-content>
               </template>
             </v-autocomplete>
+
+            <v-radio-group v-model="formData.tipo" row>
+              <v-radio label="Pessoalmente" value="P"></v-radio>
+              <v-radio label="Telefone" value="T"></v-radio>
+            </v-radio-group>
+
             <v-text-field
               v-model="formData.valor"
               id="txtValor"
@@ -173,7 +179,9 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
+          <v-btn id="btnCancelar" text @click="dialog = false">
+            Cancelar
+          </v-btn>
 
           <v-btn id="btnSubmit" color="primary" @click="submit"> Criar </v-btn>
         </v-card-actions>
@@ -203,6 +211,7 @@ export default {
         valor: null,
         cliente_nome: null,
         pizza_id: null,
+        tipo: "P",
       },
       pizzas: [],
     };
