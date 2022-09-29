@@ -100,7 +100,7 @@
                                                             termos
                                                         </a>
                                                     </template>
-                                                    Opens in new window
+                                                    Abrir em nova janela
                                                 </v-tooltip>
                                                 de privacidade
                                             </div>
