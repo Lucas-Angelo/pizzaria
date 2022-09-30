@@ -126,7 +126,6 @@ export default {
     data() {
         return {
             show1: false,
-            show2: false,
             redirect: false,
             user: {
                 name: "",

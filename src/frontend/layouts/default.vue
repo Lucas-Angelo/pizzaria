@@ -53,7 +53,7 @@ export default {
         {
           icon: 'mdi-border-color',
           title: 'Pedidos',
-          to: '/'
+          to: '/pedidos'
         },
         {
           icon: 'mdi-pizza',

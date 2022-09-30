@@ -91,7 +91,7 @@
 
             <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
 
-            <v-btn id="btnSubmit" color="primary" id="btnSubmit" @click="submit">
+            <v-btn id="btnSubmit" color="primary" @click="submit">
               {{ formData.id ? "Salvar" : "Criar" }}
             </v-btn>
           </v-card-actions>

@@ -44,7 +44,7 @@
                                         label="Senha"
                                         name="senha"
                                         prepend-inner-icon="mdi-lock"
-                                        :type="show1 ? 'text' : 'senha'"
+                                        :type="show1 ? 'text' : 'password'"
                                         outlined
                                         class="rounded-0"
                                         @keypress.enter="handleSubmit"
@@ -110,7 +110,7 @@ export default {
                         senha: this.senha,
                     })
                     .then((res) => {
-                        this.$router.push("/");
+                        this.$router.push("/pedidos");
                     })
                     .catch((err) => {
                         this.erroLogin = err.response.data.message;

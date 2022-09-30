@@ -18,25 +18,6 @@ export default {
   destroyed: function() {
     let elHtml = document.getElementsByTagName('html')[0]
     elHtml.style.overflowY = null
-  },
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      items: [
-        {
-          icon: 'mdi-border-color',
-          title: 'Pedidos',
-          to: '/'
-        },
-        {
-          icon: 'mdi-pizza',
-          title: 'Pizzas',
-          to: '/pizza'
-        }
-      ],
-      title: 'Pizzaria Sem Nome'
-    }
   }
 }
 </script>
