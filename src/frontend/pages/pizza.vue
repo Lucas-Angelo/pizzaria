@@ -107,6 +107,13 @@
                 label="URL da Imagem"
                 counter="200"
               />
+              <v-text-field
+                v-model="formData.valor"
+                id="txtValor"
+                :rules="[(v) => !!v || 'Preço é obrigatório!']"
+                label="Preço"
+                type="number"
+              />
             </v-form>
           </v-card-text>
 
@@ -140,6 +147,7 @@ export default {
         descricao: null,
         tamanho: null,
         image_url: null,
+        valor: null
       },
       valid: true,
     };
@@ -179,6 +187,7 @@ export default {
         descricao: null,
         tamanho: null,
         image_url: null,
+        valor: null
       };
       if (this.$refs.form) this.$refs.form.reset();
     },
@@ -190,6 +199,7 @@ export default {
         descricao: pizza.descricao,
         tamanho: pizza.tamanho,
         image_url: pizza.image_url,
+        valor: pizza.valor,
       };
       this.dialog = true;
     },
