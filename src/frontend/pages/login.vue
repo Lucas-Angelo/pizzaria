@@ -65,6 +65,7 @@
 
                                     <v-card-actions class="text--secondary">
                                         Não possui cadastro?<a
+                                            id="linkCadastro"
                                             href="/cadastro"
                                             class="pl-2"
                                             style="color: #f54c5a"

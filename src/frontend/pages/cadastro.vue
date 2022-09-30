@@ -72,6 +72,7 @@
                                                         #activator="{ on }"
                                                     >
                                                         <a
+                                                            id="linkTermos"
                                                             target="_blank"
                                                             href="https://vuetifyjs.com"
                                                             @click.stop
@@ -93,7 +94,7 @@
                         <v-row no-gutters>
                             <v-flex align-self-center>
                                 <v-btn
-                                id="btnCreateUser"
+                                    id="btnCreateUser"
                                     large
                                     block
                                     color="#f54c5a"
@@ -104,7 +105,7 @@
                                 <div class="text-center mt-1">
                                     <p>
                                         Já possuí uma conta?
-                                        <a @click="redirectToLogin()">
+                                        <a id="linkLogin" @click="redirectToLogin()">
                                             Entre
                                         </a>
                                     </p>

@@ -32,11 +32,11 @@
                 <tr v-for="item in usuarios" :key="item.name">
                   <td>{{ item.email }}</td>
                   <td>
-                    <v-btn outlined small @click="edit(item)">
+                    <v-btn id="btnEdit" outlined small @click="edit(item)">
                       <v-icon small>mdi-square-edit-outline</v-icon>
                       Editar
                     </v-btn>
-                    <v-btn outlined small color="error" @click="remove(item)">
+                    <v-btn id="btnDelete" outlined small color="error" @click="remove(item)">
                       <v-icon small>mdi-delete</v-icon>
                       Apagar
                     </v-btn>
@@ -91,7 +91,7 @@
 
             <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
 
-            <v-btn color="primary" id="btnSubmit" @click="submit">
+            <v-btn id="btnSubmit" color="primary" id="btnSubmit" @click="submit">
               {{ formData.id ? "Salvar" : "Criar" }}
             </v-btn>
           </v-card-actions>
