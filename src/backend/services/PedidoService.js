@@ -133,7 +133,7 @@ class PedidoService {
             console.log(error);
             throw new AppError("Erro interno do servidor!", 500, error);
         });
-        const valor_total = await Pedido.sum("pizza.valor", {
+        const valor_total = await Pedido.sum("valor", {
             include: [{ model: Pizza, as: "pizza" }],
             where,
         })
