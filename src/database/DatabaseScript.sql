@@ -62,8 +62,6 @@ CREATE TABLE IF NOT EXISTS `pizza`.`pedido` (
   `created_at` TIMESTAMP NOT NULL,
   `updated_at` TIMESTAMP NOT NULL,
   `pizza_id` INT UNSIGNED NOT NULL,
-  `created_at` TIMESTAMP NOT NULL,
-  `updated_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_pedido_pizza_idx` (`pizza_id` ASC) VISIBLE,
   CONSTRAINT `fk_pedido_pizza` FOREIGN KEY (`pizza_id`) REFERENCES `pizza`.`pizza` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
