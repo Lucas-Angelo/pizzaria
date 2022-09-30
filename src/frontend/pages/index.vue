@@ -38,8 +38,8 @@
                 <transition-group class="order-list">
                   <order
                     class="order-item"
-                    v-for="(element, eidx) in pizzaPendente"
-                    :key="eidx"
+                    v-for="element in pizzaPendente"
+                    :key="element.id"
                     :order="element"
                     @remove="cancelOrder(element)"
                     @moved="movedOrder($event, element)"
@@ -71,8 +71,8 @@
                 <transition-group class="order-list">
                   <order
                     class="order-item"
-                    v-for="(element, eidx) in pizzaProducao"
-                    :key="eidx"
+                    v-for="element in pizzaProducao"
+                    :key="element.id"
                     :order="element"
                     @remove="cancelOrder(element)"
                     @moved="movedOrder($event, element)"
@@ -104,8 +104,8 @@
                 <transition-group class="order-list">
                   <order
                     class="order-item"
-                    v-for="(element, eidx) in pizzaConcluido"
-                    :key="eidx"
+                    v-for="element in pizzaConcluido"
+                    :key="element.id"
                     :order="element"
                     @remove="cancelOrder(element)"
                     @moved="movedOrder($event, element)"
@@ -156,17 +156,10 @@
                     style="max-width: 50px"
                     alt=""
                   />
-                  &nbsp;{{ data.item.descricao }}
+                  &nbsp;{{ data.item.descricao }} - R${{ data.item.valor }}
                 </v-list-item-content>
               </template>
             </v-autocomplete>
-            <v-text-field
-              v-model="formData.valor"
-              id="txtValor"
-              :rules="[(v) => !!v || 'Preço é obrigatório!']"
-              label="Preço"
-              type="number"
-            />
           </v-form>
         </v-card-text>
 
@@ -200,7 +193,6 @@ export default {
       dialog: false,
       valid: true,
       formData: {
-        valor: null,
         cliente_nome: null,
         pizza_id: null,
       },
@@ -275,7 +267,6 @@ export default {
     },
     clearForm() {
       this.formData = {
-        valor: null,
         cliente_nome: null,
         pizza_id: null,
       };
@@ -323,7 +314,9 @@ export default {
   }
   &-list {
     display: block;
-    min-height: 200px;
+    min-height: 300px;
+    max-height: 70vh;
+    overflow-y: auto;
   }
 }
 .text {

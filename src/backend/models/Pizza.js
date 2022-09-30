@@ -21,6 +21,12 @@ class Pizza extends Model {
                     allowNull: false,
                     notEmpty: true,
                 },
+                valor: {
+                    field: "valor",
+                    type: DataTypes.DECIMAL(9).UNSIGNED,
+                    allowNull: false,
+                    notEmpty: true,
+                },
                 tamanho: {
                     field: "tamanho",
                     type: DataTypes.ENUM("35CM", "45CM", "60CM"),
