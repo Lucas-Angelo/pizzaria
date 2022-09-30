@@ -91,7 +91,7 @@ class PedidoController {
 
     async getAll(request, response) {
         const pedidoService = new PedidoService();
-        const { data, count, total, pages, offset } =
+        const { data, count, total, pages, offset, valor_total } =
             await pedidoService.getAll(request.query);
 
         return response.status(200).json({
@@ -100,6 +100,7 @@ class PedidoController {
             total,
             pages,
             offset,
+            valor_total
         });
     }
 }

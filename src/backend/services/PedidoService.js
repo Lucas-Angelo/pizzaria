@@ -122,17 +122,21 @@ class PedidoService {
         const { paginas, ...SortPaginateOptions } = SortPaginate(
             query,
             attributes,
-            pedidoQuantity
+            pedidoQuantity,
         );
 
         const pedidos = await Pedido.findAndCountAll({
             ...SortPaginateOptions,
             include: [{ model: Pizza, as: "pizza" }],
-            where
+            where,
         }).catch(function (error) {
             console.log(error);
             throw new AppError("Erro interno do servidor!", 500, error);
         });
+        const valor_total = await Pedido.sum("pizza.valor", {
+            include: [{ model: Pizza, as: "pizza" }],
+            where,
+        })
 
         return {
             data: pedidos.rows,
@@ -140,6 +144,7 @@ class PedidoService {
             total: pedidos.count,
             pages: paginas,
             offset: SortPaginateOptions.offset,
+            valor_total
         };
     }
 }
