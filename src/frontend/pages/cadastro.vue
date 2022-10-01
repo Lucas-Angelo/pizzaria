@@ -25,7 +25,10 @@
                                         outlined
                                         :rules="[
                                             (value) =>
-                                                !!value || 'Email é obrigatório'
+                                                !!value || 'Email é obrigatório',
+                                            v => /.+@.+\..+/.test(v) || 'Email em formato inválido',
+                                            v => (v && v.length < 60) || 'Email deve ser menor que 60 caracteres',
+
                                         ]"
                                     ></v-text-field>
                                 </v-col>
@@ -43,6 +46,7 @@
                                                 !!value ||
                                                 'Senha é obrigatória',
                                             rules.min,
+                                            v => (v && v.length < 50) || 'Senha deve ser menor que 50 caracteres'
                                         ]"
                                         :type="show1 ? 'text' : 'password'"
                                         label="Senha"
