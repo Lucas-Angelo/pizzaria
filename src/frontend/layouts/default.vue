@@ -53,12 +53,17 @@ export default {
         {
           icon: 'mdi-border-color',
           title: 'Pedidos',
-          to: '/'
+          to: '/pedidos'
         },
         {
           icon: 'mdi-pizza',
           title: 'Pizzas',
           to: '/pizza'
+        },
+        {
+          icon: 'mdi-account',
+          title: 'Usuários',
+          to: '/usuarios'
         }
       ],
       title: 'Pizzaria Sem Nome'
