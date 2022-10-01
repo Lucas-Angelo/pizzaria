@@ -26,14 +26,15 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { cliente_nome, pizza_id } = request.body;
+        const { cliente_nome, pizza_id, tipo } = request.body;
         const status = "PENDENTE";
 
         const pedidoService = new PedidoService();
         const pedido = await pedidoService.create(
             status,
             cliente_nome,
-            pizza_id
+            pizza_id,
+            tipo
         );
 
         return response.status(201).json({
@@ -65,12 +66,12 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { status, cliente_nome } = request.body;
+        const { status, cliente_nome, tipo } = request.body;
         const id = request.params.id;
 
         const pedidoService = new PedidoService();
 
-        await pedidoService.update(id, status, cliente_nome);
+        await pedidoService.update(id, status, cliente_nome, tipo);
 
         return response.status(200).json({});
     }
