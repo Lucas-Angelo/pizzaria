@@ -7,13 +7,13 @@
           <v-btn
             class="btn-new"
             color="success"
-            id="btnAddNewPizza"
+            id="btnAddNewUser"
             @click.stop="
               clearForm();
               dialog = true;
             "
           >
-            Cadastrar nova Pizza
+            Cadastrar novo Usuário
           </v-btn>
         </v-col>
       </v-row>
@@ -24,36 +24,25 @@
             <template v-slot:default>
               <thead>
                 <tr>
-                  <th width="60px" class="text-left"></th>
-                  <th class="text-left">Nome</th>
-                  <th width="80px" class="text-left">Tamanho</th>
+                  <th class="text-left">Email</th>
                   <th width="280px" class="text-left">Opções</th>
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="item in pizzas" :key="item.name">
+                <tr v-for="item in usuarios" :key="item.name">
+                  <td>{{ item.email }}</td>
                   <td>
-                    <img
-                      :src="item.image_url"
-                      width="50px"
-                      height="50px"
-                      alt=""
-                    />
-                  </td>
-                  <td>{{ item.descricao }}</td>
-                  <td>{{ item.tamanho }}</td>
-                  <td>
-                    <v-btn outlined small @click="edit(item)">
+                    <v-btn id="btnEdit" outlined small @click="edit(item)">
                       <v-icon small>mdi-square-edit-outline</v-icon>
                       Editar
                     </v-btn>
-                    <v-btn outlined small color="error" @click="remove(item)">
+                    <v-btn id="btnDelete" outlined small color="error" @click="remove(item)">
                       <v-icon small>mdi-delete</v-icon>
                       Apagar
                     </v-btn>
                   </td>
                 </tr>
-                <tr v-if="pizzas.length == 0">
+                <tr v-if="usuarios.length == 0">
                   <td align="center" colspan="3">Sem dados cadastrados</td>
                 </tr>
               </tbody>
@@ -61,58 +50,38 @@
           </v-simple-table>
         </v-col>
       </v-row>
-      <!-- Pizza creation modal -->
+      <!-- Usuario creation modal -->
       <v-dialog v-model="dialog" max-width="450">
         <v-card>
           <v-card-title class="text-h5">
-            {{ formData.id ? "Editar" : "Criar nova" }} Pizza
+            {{ formData.id ? "Editar" : "Criar nova" }} Usuário
           </v-card-title>
 
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
                 v-if="!formData.id"
-                v-model="formData.descricao"
-                id="txtDescricao"
+                v-model="formData.email"
+                id="txtEmail"
                 :rules="[
-                  (v) => !!v || 'Nome é obrigatório!',
-                  (v) =>
-                    (v && v.length <= 45) ||
-                    'Nome deve ter menos de 45 caracteres',
-                ]"
-                label="Nome"
-                counter="45"
-              />
-              <label>Tamanho</label>
-              <br />
-              <v-btn-toggle v-model="formDataTamanho">
-                <v-btn
-                  v-for="(t, tidx) in tamanhos"
-                  :key="tidx"
-                  :id="'btnTamanho' + t"
-                >
-                  {{ t }}
-                </v-btn>
-              </v-btn-toggle>
-              <br />
-              <v-text-field
-                v-model="formData.image_url"
-                id="txtUrl"
-                :rules="[
-                  (v) => !!v || 'URL da foto é obrigatório!',
+                  (v) => !!v || 'Email é obrigatório!',
                   (v) =>
                     (v && v.length <= 200) ||
-                    'Foto deve ter menos de 200 caracteres',
+                    'email deve ter menos de 200 caracteres',
                 ]"
-                label="URL da Imagem"
+                label="Email"
                 counter="200"
               />
               <v-text-field
-                v-model="formData.valor"
-                id="txtValor"
-                :rules="[(v) => !!v || 'Preço é obrigatório!']"
-                label="Preço"
-                type="number"
+                v-model="formData.senha"
+                id="txtSenha"
+                :rules="[
+                  (v) => !!v || 'Senha é obrigatório!',
+                  (v) =>
+                    (v && v.length >= 8) ||
+                    'Senha deve ter mais de 7 caracteres',
+                ]"
+                label="Senha"
               />
             </v-form>
           </v-card-text>
@@ -122,7 +91,7 @@
 
             <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
 
-            <v-btn color="primary" id="btnSubmit" @click="submit">
+            <v-btn id="btnSubmit" color="primary" @click="submit">
               {{ formData.id ? "Salvar" : "Criar" }}
             </v-btn>
           </v-card-actions>
@@ -135,29 +104,24 @@
 <script>
 import Swal from "sweetalert2";
 export default {
-  name: "Pizzas",
+  name: "Usuarios",
   data() {
     return {
-      pizzas: [],
-      pizzasPages: 1,
+      usuarios: [],
+      usuarioPages: 1,
       dialog: false,
-      tamanhos: ["35CM", "45CM", "60CM"],
-      formDataTamanho: 0,
       formData: {
-        descricao: null,
-        tamanho: null,
-        image_url: null,
-        valor: null
+        senha: null
       },
       valid: true,
     };
   },
   async fetch() {
     this.$axios
-      .get("/pizza??pagina=1&limite=100&atributo=descricao&ordem=ASC")
+      .get("/usuario?pagina=1&limite=5&atributo=email&ordem=DESC")
       .then((res) => {
-        this.pizzas = res.data.data;
-        this.pizzasPages = res.data.pages;
+        this.usuarios = res.data.data;
+        this.usuarioPages = res.data.pages;
       });
   },
   mounted() {
@@ -166,15 +130,14 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
-        this.formData.tamanho = this.tamanhos[this.formDataTamanho];
         if (!this.formData.id)
-          this.$axios.post("pizza", this.formData).then(() => {
+          this.$axios.post("usuario", this.formData).then(() => {
             this.$fetch();
             this.dialog = false;
           });
         else
           this.$axios
-            .put(`pizza/${this.formData.id}`, this.formData)
+            .put(`usuario/${this.formData.id}`, this.formData)
             .then(() => {
               this.$fetch();
               this.dialog = false;
@@ -182,30 +145,23 @@ export default {
       }
     },
     clearForm() {
-      this.formDataTamanho = 0;
       this.formData = {
-        descricao: null,
-        tamanho: null,
-        image_url: null,
-        valor: null
+        senha: null,
       };
       if (this.$refs.form) this.$refs.form.reset();
     },
-    async edit(pizza) {
-      await this.clearForm();
-      this.formDataTamanho = this.tamanhos.indexOf(pizza.tamanho);
+    async edit(usuario) {
+      this.clearForm();
       this.formData = {
-        id: pizza.id,
-        descricao: pizza.descricao,
-        tamanho: pizza.tamanho,
-        image_url: pizza.image_url,
-        valor: pizza.valor,
+        id: usuario.id,
+        email: usuario.email,
+        senha: usuario.senha
       };
       this.dialog = true;
     },
-    remove(pizza) {
+    remove(usuario) {
       Swal.fire({
-        title: `Apagar a pizza ${pizza.descricao} ?`,
+        title: `Apagar o usuário ${usuario.email} ?`,
         text: "Você não conseguirá reverter essa ação!",
         showCancelButton: true,
         confirmButtonColor: "#d33",
@@ -215,13 +171,13 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$axios
-            .delete(`pizza/${pizza.id}`)
+            .delete(`usuario/${usuario.id}`)
             .then(() => {
               this.$fetch();
               this.dialog = false;
               Swal.fire({
                 position: "top-end",
-                title: "Pizza removida!",
+                title: "Usuário removido!",
                 showConfirmButton: false,
                 timer: 1500,
               });
@@ -230,7 +186,7 @@ export default {
               Swal.fire({
                 icon: "error",
                 position: "top-end",
-                title: "Houve um erro ao remover a pizza!",
+                title: "Houve um erro ao remover o usuário!",
                 showConfirmButton: true,
               });
             });

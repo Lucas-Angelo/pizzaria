@@ -21,12 +21,6 @@ class Pedido extends Model {
                     allowNull: false,
                     notEmpty: true,
                 },
-                valor: {
-                    field: "valor",
-                    type: DataTypes.DECIMAL(9).UNSIGNED,
-                    allowNull: false,
-                    notEmpty: true,
-                },
                 cliente_nome: {
                     field: "cliente_nome",
                     type: DataTypes.STRING(50),
@@ -44,11 +38,22 @@ class Pedido extends Model {
                         key: "id",
                     },
                 },
+                created_at: {
+                    type: DataTypes.DATE,
+                    field: "created_at",
+                },
+                updated_at: {
+                    type: DataTypes.DATE,
+                    field: "updated_at",
+                },
             },
             {
                 tableName: "pedido",
                 charset: "utf8mb4",
                 collate: "utf8mb4_bin",
+                createdAt: "created_at",
+                updatedAt: "updated_at",
+                timestamps: true,
                 sequelize,
             }
         );
