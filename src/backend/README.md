@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `pizza`.`pedido` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-ALTER TABLE IF NOT EXISTS `pizza`.`pedido`
+ALTER TABLE `pizza`.`pedido`
 ADD COLUMN tipo ENUM('PRESENCIAL','TELEFONE');
 
 
