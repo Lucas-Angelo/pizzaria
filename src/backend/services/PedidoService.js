@@ -30,7 +30,7 @@ class PedidoService {
             status,
             cliente_nome,
             pizza_id,
-            tipo
+            tipo,
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -60,8 +60,8 @@ class PedidoService {
         await pedido
             .update({
                 status,
-                cliente_nome,,
-                tipo
+                cliente_nome,
+                tipo,
             })
             .catch((error) => {
                 throw new AppError("Erro interno do servidor!", 500, error);
