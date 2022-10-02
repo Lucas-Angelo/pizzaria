@@ -4,6 +4,7 @@ const AppError = require("../errors/AppError");
 const PedidoService = require("../services/PedidoService");
 
 const pedidoStatusEnum = ["PENDENTE", "PRODUCAO", "CONCLUIDO"];
+const tipoPedidoEnum = ["PRESENCIAL", "TELEFONE"];
 
 class PedidoController {
     async create(request, response) {
@@ -18,6 +19,10 @@ class PedidoController {
                 .positive()
                 .integer()
                 .required("'pizza_id' is a required field"),
+            tipo: yup
+            .mixed()
+            .oneOf(tipoPedidoEnum)
+            .required("'tipo' is a required field"),
         });
 
         try {
@@ -26,14 +31,15 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { cliente_nome, pizza_id } = request.body;
+        const { cliente_nome, pizza_id, tipo } = request.body;
         const status = "PENDENTE";
 
         const pedidoService = new PedidoService();
         const pedido = await pedidoService.create(
             status,
             cliente_nome,
-            pizza_id
+            pizza_id,
+            tipo
         );
 
         return response.status(201).json({
@@ -53,6 +59,7 @@ class PedidoController {
     async update(request, response) {
         const scheme = yup.object().shape({
             status: yup.mixed().oneOf(pedidoStatusEnum),
+            tipo: yup.mixed().oneOf(tipoPedidoEnum),
             cliente_nome: yup
                 .string("'cliente_nome' must be string")
                 .min(1)
@@ -65,12 +72,12 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { status, cliente_nome } = request.body;
+        const { status, cliente_nome, tipo } = request.body;
         const id = request.params.id;
 
         const pedidoService = new PedidoService();
 
-        await pedidoService.update(id, status, cliente_nome);
+        await pedidoService.update(id, status, cliente_nome, tipo);
 
         return response.status(200).json({});
     }
