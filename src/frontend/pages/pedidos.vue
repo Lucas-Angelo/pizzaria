@@ -127,6 +127,11 @@
 
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
+            <v-radio-group v-model="formData.tipo" row mandatory>
+              <v-radio label="Telefone" value="TELEFONE"></v-radio>
+              <v-radio label="Presencial" value="PRESENCIAL"></v-radio>
+            </v-radio-group>
+
             <v-text-field
               v-model="formData.cliente_nome"
               id="txtClienteNome"
@@ -173,7 +178,9 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
+          <v-btn id="btnCancelar" text @click="dialog = false">
+            Cancelar
+          </v-btn>
 
           <v-btn id="btnSubmit" color="primary" @click="submit"> Criar </v-btn>
         </v-card-actions>
@@ -203,6 +210,7 @@ export default {
         valor: null,
         cliente_nome: null,
         pizza_id: null,
+        tipo: "TELEFONE",
       },
       pizzas: [],
     };
