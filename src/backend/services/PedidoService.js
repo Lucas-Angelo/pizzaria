@@ -18,7 +18,7 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, cliente_nome, pizza_id) {
+    async create(status, cliente_nome, pizza_id, tipo) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -30,6 +30,7 @@ class PedidoService {
             status,
             cliente_nome,
             pizza_id,
+            tipo
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -42,7 +43,7 @@ class PedidoService {
         return pedido;
     }
 
-    async update(id, status, cliente_nome) {
+    async update(id, status, cliente_nome, tipo) {
         const pedido = await Pedido.findOne({
             where: {
                 id: id,
@@ -59,7 +60,8 @@ class PedidoService {
         await pedido
             .update({
                 status,
-                cliente_nome,
+                cliente_nome,,
+                tipo
             })
             .catch((error) => {
                 throw new AppError("Erro interno do servidor!", 500, error);
