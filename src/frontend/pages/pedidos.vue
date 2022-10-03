@@ -127,7 +127,7 @@
 
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
-            <v-radio-group v-model="formData.tipo" row mandatory>
+            <v-radio-group id="radioPedidoTipo" v-model="formData.tipo" row mandatory>
               <v-radio label="Telefone" value="TELEFONE"></v-radio>
               <v-radio label="Presencial" value="PRESENCIAL"></v-radio>
             </v-radio-group>
