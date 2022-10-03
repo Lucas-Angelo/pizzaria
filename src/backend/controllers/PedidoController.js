@@ -20,9 +20,9 @@ class PedidoController {
                 .integer()
                 .required("'pizza_id' is a required field"),
             tipo: yup
-            .mixed()
-            .oneOf(tipoPedidoEnum)
-            .required("'tipo' is a required field"),
+                .mixed()
+                .oneOf(tipoPedidoEnum)
+                .required("'tipo' is a required field"),
         });
 
         try {
