@@ -98,12 +98,10 @@ class PedidoService {
         // filter
         if (query.status) where.status = query.status;
         if (query.pizza_id) where.pizza_id = query.pizza_id;
-        if (query.cliente_nome){
+        if (query.tipo) where.tipo = query.tipo;
+        if (query.cliente_nome) {
             where.cliente_nome = Sequelize.where(
-                Sequelize.fn(
-                    "LOWER",
-                    Sequelize.col("`Pedido`.`cliente_nome`")
-                ),
+                Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`cliente_nome`")),
                 "LIKE",
                 "%" + query.cliente_nome.toLowerCase() + "%"
             );
@@ -122,7 +120,7 @@ class PedidoService {
         const { paginas, ...SortPaginateOptions } = SortPaginate(
             query,
             attributes,
-            pedidoQuantity,
+            pedidoQuantity
         );
 
         const pedidos = await Pedido.findAndCountAll({
@@ -136,7 +134,7 @@ class PedidoService {
         const valor_total = await Pedido.sum("valor", {
             include: [{ model: Pizza, as: "pizza" }],
             where,
-        })
+        });
 
         return {
             data: pedidos.rows,
@@ -144,7 +142,7 @@ class PedidoService {
             total: pedidos.count,
             pages: paginas,
             offset: SortPaginateOptions.offset,
-            valor_total
+            valor_total,
         };
     }
 }

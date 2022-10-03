@@ -100,7 +100,7 @@ class PedidoController {
             total,
             pages,
             offset,
-            valor_total
+            valor_total,
         });
     }
 }
