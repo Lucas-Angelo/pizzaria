@@ -22,10 +22,10 @@ class Pedido extends Model {
                     notEmpty: true,
                 },
                 tipo: {
-                  field: "tipo",
-                  type: DataTypes.ENUM("PRESENCIAL", "TELEFONE"),
-                  allowNull: false,
-                  notEmpty: true,
+                    field: "tipo",
+                    type: DataTypes.ENUM("PRESENCIAL", "TELEFONE"),
+                    allowNull: false,
+                    notEmpty: true,
                 },
                 cliente_nome: {
                     field: "cliente_nome",
