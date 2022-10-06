@@ -165,13 +165,6 @@
                 </v-list-item-content>
               </template>
             </v-autocomplete>
-            <v-text-field
-              v-model="formData.valor"
-              id="txtValor"
-              :rules="[(v) => !!v || 'Preço é obrigatório!']"
-              label="Preço"
-              type="number"
-            />
           </v-form>
         </v-card-text>
 
