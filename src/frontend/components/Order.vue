@@ -18,24 +18,27 @@
             </template>
             <v-list>
               <v-list-item
+                class="btn-move-pending"
                 v-if="order.status != 'PENDENTE'"
                 @click="$emit('moved', 'PENDENTE')"
               >
                 <v-list-item-title>Mover Para Pendente</v-list-item-title>
               </v-list-item>
               <v-list-item
+                class="btn-move-production"
                 v-if="order.status != 'PRODUCAO'"
                 @click="$emit('moved', 'PRODUCAO')"
               >
                 <v-list-item-title>Mover Para Produção</v-list-item-title>
               </v-list-item>
               <v-list-item
+                class="btn-move-done"
                 v-if="order.status != 'CONCLUIDO'"
                 @click="$emit('moved', 'CONCLUIDO')"
               >
                 <v-list-item-title>Mover Para Concluído</v-list-item-title>
               </v-list-item>
-              <v-list-item @click="$emit('remove')">
+              <v-list-item class="btn-order-cancel" @click="$emit('remove')">
                 <v-list-item-title>
                   <span class="text-danger"> Cancelar Pedido </span>
                 </v-list-item-title>
