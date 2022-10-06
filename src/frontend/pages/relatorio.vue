@@ -25,6 +25,9 @@
             </template>
             <v-date-picker v-model="dateBegin" scrollable :max="maxDate">
               <v-spacer></v-spacer>
+              <v-btn id="btnDataInicioClean" text color="primary" @click="$refs.dialog.save(null)">
+                Limpar
+              </v-btn>
               <v-btn id="btnDataInicioCancel" text color="primary" @click="modal = false">
                 Cancelar
               </v-btn>
@@ -56,6 +59,9 @@
             </template>
             <v-date-picker v-model="dateEnd" scrollable :max="maxDate">
               <v-spacer></v-spacer>
+              <v-btn id="btnDataFimClean" text color="primary" @click="$refs.dialog2.save(null)">
+                Limpar
+              </v-btn>
               <v-btn id="btnDataFimCancel" text color="primary" @click="modal2 = false">
                 Cancelar
               </v-btn>
@@ -66,17 +72,47 @@
           </v-dialog>
         </v-col>
         <!-- Status -->
-        <v-col cols="12" sm="6" md="6" lg="3">
-          <small>Status</small>
-          <v-radio-group id="radioPedidoTipo" v-model="tipo" row style="margin: 0">
-            <v-radio id="radioPendente" label="Pendente" value="PENDENTE"></v-radio>
-            <v-radio id="radioProducao" label="Produção" value="PRODUCAO"></v-radio>
-            <v-radio id="radioConcluido" label="Concluido" value="CONCLUIDO"></v-radio>
-          </v-radio-group>
+        <v-col cols="12" sm="6" md="6" lg="2">
+          <v-select
+            id="selStatus"
+            v-model="status"
+            :items="[{
+              text: 'Todos',
+              value: ''
+            },{
+              text: 'Pendente',
+              value: 'PENDENTE'
+            },{
+              text: 'Produção',
+              value: 'PRODUCAO'
+            },{
+              text: 'Concluido',
+              value: 'CONCLUIDO'
+            }]"
+            label="Status"
+          />
         </v-col>
-        <v-col cols="12" sm="6" md="2" lg="3">
+        <!-- Tipo -->
+        <v-col cols="12" sm="6" md="6" lg="2">
+          <v-select
+            id="selTipo"
+            v-model="tipo"
+            :items="[{
+              text: 'Todos',
+              value: ''
+            },{
+              text: 'Presencial',
+              value: 'PRESENCIAL'
+            },{
+              text: 'Telefone',
+              value: 'TELEFONE'
+            }]"
+            label="Tipo"
+          />
+        </v-col>
+        <v-col cols="12" sm="6" md="2" lg="2">
           <br>
-          <v-btn id="btnPesquisar" color="primary" @click="changeContent">
+          <v-btn id="btnPesquisar" color="primary" @click="changeContent(1)">
             <v-icon>mdi-magnify</v-icon>
             Pesquisar
           </v-btn>
@@ -115,6 +151,19 @@
           <p class="float-right">Total de Itens: {{ orders.length }}</p>
         </v-col>
       </v-row>
+      <!-- Paginacao -->
+      <v-row>
+        <v-col>
+          <div class="text-center">
+            <v-pagination
+              id="listPaginacao"
+              v-model="ordersPage"
+              :length="ordersPages"
+              @input="changeContent"
+            ></v-pagination>
+          </div>
+        </v-col>
+      </v-row>
     </v-col>
   </v-row>
 </template>
@@ -123,17 +172,16 @@
 export default {
   data() {
     return {
-      dateBegin: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
-      dateEnd: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
-      tipo: "CONCLUIDO",
+      dateBegin: null,
+      dateEnd: null,
+      status: "",
+      tipo: "",
       modal: false,
       modal2: false,
       orders: [],
-      maxDate: new Date().toISOString().split('T')[0]
+      maxDate: new Date().toISOString().split('T')[0],
+      ordersPages: 1,
+      ordersPage: 1
     };
   },
   computed: {
@@ -154,11 +202,13 @@ export default {
       const [year, month, day] = date.split("-");
       return `${day}/${month}/${year}`;
     },
-    changeContent(){
-      let dtStart = new Date(this.dateBegin).toISOString().split('T')[0]
-      let dtEnd = new Date(this.dateEnd).toISOString().split('T')[0]
-      this.$axios.get(`pedido?pagina=1&limite=500&status=${this.tipo}&created_at_start=${dtStart} 00:00&created_at_end=${dtEnd} 23:59`).then((res) => {
+    changeContent(page = 1){
+      console.log(page)
+      let dtStart = this.dateBegin ? new Date(this.dateBegin).toISOString().split('T')[0] + ' 00:00' : ''
+      let dtEnd = this.dateEnd ? new Date(this.dateEnd).toISOString().split('T')[0] + ' 23:59' : ''
+      this.$axios.get(`pedido?pagina=${page}&limite=20&status=${this.status}&tipo=${this.tipo}&created_at_start=${dtStart}&created_at_end=${dtEnd}`).then((res) => {
         this.orders = res.data.data
+        this.ordersPages = res.data.pages;
       });
     },
     capitalizeFirstLetter(string) {
