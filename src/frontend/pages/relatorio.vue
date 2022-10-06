@@ -67,7 +67,7 @@
         </v-col>
         <!-- Status -->
         <v-col cols="12" sm="6" md="6" lg="3">
-          <small>Tamanho</small>
+          <small>Status</small>
           <v-radio-group id="radioPedidoTipo" v-model="tipo" row style="margin: 0">
             <v-radio id="radioPendente" label="Pendente" value="PENDENTE"></v-radio>
             <v-radio id="radioProducao" label="Produção" value="PRODUCAO"></v-radio>
