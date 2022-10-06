@@ -64,6 +64,11 @@ export default {
           icon: 'mdi-account',
           title: 'Usuários',
           to: '/usuarios'
+        },
+        {
+          icon: 'mdi-chart-box',
+          title: 'Relatório',
+          to: '/relatorio'
         }
       ],
       title: 'Pizzaria Sem Nome'
