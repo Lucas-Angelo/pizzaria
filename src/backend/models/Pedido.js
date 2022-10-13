@@ -1,5 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const Pizza = require("./Pizza");
+const Usuario = require("./Usuario");
 
 class Pedido extends Model {
     static init(sequelize) {
@@ -27,9 +28,9 @@ class Pedido extends Model {
                     allowNull: false,
                     notEmpty: true,
                 },
-                cliente_nome: {
-                    field: "cliente_nome",
-                    type: DataTypes.STRING(50),
+                observacao: {
+                    field: "observacao",
+                    type: DataTypes.STRING(255),
                     allowNull: false,
                     notEmpty: true,
                 },
@@ -41,6 +42,17 @@ class Pedido extends Model {
                     notEmpty: true,
                     references: {
                         model: Pizza,
+                        key: "id",
+                    },
+                },
+                usuario_id: {
+                    field: "usuario_id",
+                    type: DataTypes.INTEGER.UNSIGNED,
+                    allowNull: false,
+                    required: true,
+                    notEmpty: true,
+                    references: {
+                        model: Usuario,
                         key: "id",
                     },
                 },

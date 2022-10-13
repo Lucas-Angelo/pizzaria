@@ -14,6 +14,12 @@ class Usuario extends Model {
                     required: true,
                     notEmpty: true,
                 },
+                nome: {
+                    field: "nome",
+                    type: DataTypes.STRING(100),
+                    allowNull: false,
+                    notEmpty: true,
+                },
                 email: {
                     field: "email",
                     type: DataTypes.STRING(60),

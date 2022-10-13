@@ -19,7 +19,7 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, cliente_nome, pizza_id, tipo) {
+    async create(status, observacao, pizza_id, tipo) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -29,7 +29,7 @@ class PedidoService {
 
         const pedido = await Pedido.create({
             status,
-            cliente_nome,
+            observacao,
             pizza_id,
             tipo,
         }).catch((error) => {
@@ -44,7 +44,7 @@ class PedidoService {
         return pedido;
     }
 
-    async update(id, status, cliente_nome, tipo) {
+    async update(id, status, observacao, tipo) {
         const pedido = await Pedido.findOne({
             where: {
                 id: id,
@@ -61,7 +61,7 @@ class PedidoService {
         await pedido
             .update({
                 status,
-                cliente_nome,
+                observacao,
                 tipo,
             })
             .catch((error) => {
@@ -101,11 +101,11 @@ class PedidoService {
         if (query.status) where.status = query.status;
         if (query.pizza_id) where.pizza_id = query.pizza_id;
         if (query.tipo) where.tipo = query.tipo;
-        if (query.cliente_nome) {
-            where.cliente_nome = Sequelize.where(
-                Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`cliente_nome`")),
+        if (query.observacao) {
+            where.observacao = Sequelize.where(
+                Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`observacao`")),
                 "LIKE",
-                "%" + query.cliente_nome.toLowerCase() + "%"
+                "%" + query.observacao.toLowerCase() + "%"
             );
         }
         if (query.created_at_start || query.created_at_end) {
