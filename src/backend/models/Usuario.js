@@ -30,6 +30,12 @@ class Usuario extends Model {
                     notEmpty: true,
                     allowNull: false,
                 },
+                tipo: {
+                    field: "tipo",
+                    type: DataTypes.ENUM("ADMIN", "CLIENTE"),
+                    allowNull: false,
+                    notEmpty: true,
+                },
                 created_at: {
                     type: DataTypes.DATE,
                     field: "created_at",
