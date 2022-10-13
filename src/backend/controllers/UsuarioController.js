@@ -54,13 +54,12 @@ class UsuarioController {
         }
 
         const { nome, email, senha } = request.body;
+        const tipo = "CLIENTE";
 
         const usuarioService = new UsuarioService();
-        const usuario = await usuarioService.create(nome, email, senha);
+        const usuario = await usuarioService.create(nome, email, senha, tipo);
 
-        return response.status(201).json({
-            usuario,
-        });
+        return response.status(201).json(usuario);
     }
 
     async delete(request, response) {

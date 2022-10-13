@@ -4,6 +4,8 @@ const { SortPaginate } = require("../helpers/SortPaginate");
 const PizzaService = require("../services/PizzaService");
 const Pizza = require("../models/Pizza");
 const { Op, Sequelize } = require("sequelize");
+const UsuarioService = require("./UsuarioService");
+const Usuario = require("../models/Usuario");
 
 class PedidoService {
     async findById(id, attributes) {
@@ -19,7 +21,7 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, observacao, pizza_id, tipo) {
+    async create(status, observacao, tipo, pizza_id, usuario_id) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -27,11 +29,19 @@ class PedidoService {
                 `Pizza de 'id' ${pizza_id} não encontrada!`,
             ]);
 
+        const usuarioService = new UsuarioService();
+        const usuario = await usuarioService.findById(usuario_id);
+        if (!usuario)
+            throw new AppError("Usuario não encontrado!", 422, [
+                `Usuario de 'id' ${usuario_id} não encontrado!`,
+            ]);
+
         const pedido = await Pedido.create({
             status,
             observacao,
-            pizza_id,
             tipo,
+            pizza_id,
+            usuario_id,
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -127,7 +137,10 @@ class PedidoService {
 
         const pedidos = await Pedido.findAndCountAll({
             ...SortPaginateOptions,
-            include: [{ model: Pizza, as: "pizza" }],
+            include: [
+                { model: Pizza, as: "pizza" },
+                { model: Usuario, as: "usuario" },
+            ],
             where,
         }).catch(function (error) {
             console.log(error);

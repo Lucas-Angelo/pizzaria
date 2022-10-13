@@ -52,7 +52,7 @@ class PizzaService {
         return pizza;
     }
 
-    async update(id, valor, tamanho, image_url) {
+    async update(id, descricao, valor, tamanho, image_url) {
         const pizza = await Pizza.findOne({
             where: {
                 id: id,
@@ -68,6 +68,7 @@ class PizzaService {
 
         await pizza
             .update({
+                descricao,
                 tamanho,
                 valor,
                 image_url,

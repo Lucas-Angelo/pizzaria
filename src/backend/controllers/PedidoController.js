@@ -13,15 +13,20 @@ class PedidoController {
                 .string("'observacao' must be string")
                 .min(1)
                 .max(255),
+            tipo: yup
+                .mixed()
+                .oneOf(tipoPedidoEnum)
+                .required("'tipo' is a required field"),
             pizza_id: yup
                 .number()
                 .positive()
                 .integer()
                 .required("'pizza_id' is a required field"),
-            tipo: yup
-                .mixed()
-                .oneOf(tipoPedidoEnum)
-                .required("'tipo' is a required field"),
+            usuario_id: yup
+                .number()
+                .positive()
+                .integer()
+                .required("'usuario_id' is a required field"),
         });
 
         try {
@@ -30,20 +35,19 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { observacao, pizza_id, tipo } = request.body;
+        const { observacao, pizza_id, tipo, usuario_id } = request.body;
         const status = "PENDENTE";
 
         const pedidoService = new PedidoService();
         const pedido = await pedidoService.create(
             status,
             observacao,
+            tipo,
             pizza_id,
-            tipo
+            usuario_id
         );
 
-        return response.status(201).json({
-            pedido,
-        });
+        return response.status(201).json(pedido);
     }
 
     async delete(request, response) {

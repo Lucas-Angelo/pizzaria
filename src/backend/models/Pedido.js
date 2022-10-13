@@ -31,8 +31,8 @@ class Pedido extends Model {
                 observacao: {
                     field: "observacao",
                     type: DataTypes.STRING(255),
-                    allowNull: false,
-                    notEmpty: true,
+                    allowNull: true,
+                    notEmpty: false,
                 },
                 pizza_id: {
                     field: "pizza_id",
