@@ -30,7 +30,12 @@ class UsuarioService {
     }
 
     async signin(email, senha) {
-        let usuario = await this.findByEmail(email, ["id", "email", "senha"]);
+        let usuario = await this.findByEmail(email, [
+            "id",
+            "email",
+            "senha",
+            "tipo",
+        ]);
 
         if (!usuario)
             throw new AppError("Usuário não encontrado!", 404, [
