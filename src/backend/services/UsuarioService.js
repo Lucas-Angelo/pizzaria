@@ -1,6 +1,7 @@
 const AppError = require("../errors/AppError");
 const Usuario = require("../models/Usuario");
 const { SortPaginate } = require("../helpers/SortPaginate");
+const { Op, Sequelize } = require("sequelize");
 
 class UsuarioService {
     async findById(id, attributes) {
@@ -124,7 +125,42 @@ class UsuarioService {
     }
 
     async getAll(query) {
+        const where = {};
         const attributes = Object.keys(Usuario.getAttributes());
+
+        if (query.tipo) where.tipo = query.tipo;
+        if (query.nome){
+            where.nome = Sequelize.where(
+                Sequelize.fn("LOWER", Sequelize.col("`Usuario`.`nome`")),
+                "LIKE",
+                "%" + query.nome.toLowerCase() + "%"
+            );
+        }
+        if (query.email){
+            where.email = Sequelize.where(
+                Sequelize.fn("LOWER", Sequelize.col("`Usuario`.`email`")),
+                "LIKE",
+                "%" + query.email.toLowerCase() + "%"
+            );
+        }
+        if (query.created_at_start || query.created_at_end) {
+            const startDate = query.created_at_start
+                ? new Date(query.created_at_start)
+                : new Date(null); // * new Date(null) == 1970
+            const endDate = query.created_at_end
+                ? new Date(query.created_at_end)
+                : new Date("2999/01/01");
+            where.created_at = { [Op.between]: [startDate, endDate] };
+        }
+        if (query.updated_at_start || query.updated_at_end) {
+            const startDate = query.updated_at_start
+                ? new Date(query.updated_at_start)
+                : new Date(null); // * new Date(null) == 1970
+            const endDate = query.updated_at_end
+                ? new Date(query.updated_at_end)
+                : new Date("2999/01/01");
+            where.updated_at = { [Op.between]: [startDate, endDate] };
+        }
 
         const usuarioQuantity = await Usuario.count();
         const { paginas, ...SortPaginateOptions } = SortPaginate(
@@ -135,6 +171,8 @@ class UsuarioService {
 
         const usuarios = await Usuario.findAndCountAll({
             ...SortPaginateOptions,
+            attributes: {exclude: ['senha']},
+            where
         }).catch(function (error) {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
