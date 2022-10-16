@@ -144,7 +144,6 @@ export default {
   methods: {
     buscarCliente(){
         let local = JSON.parse(localStorage.getItem('user'));
-        console.log(local);
         this.usuario.usuarioId=local.id
     },
     buscarPedidosUsuario(pedidos) {
