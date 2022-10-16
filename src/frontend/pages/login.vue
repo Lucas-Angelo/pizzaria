@@ -120,7 +120,6 @@ export default {
                         senha: this.senha,
                     })
                     .then((res) => {
-                        console.log(res);
                         let local = {}
                         localStorage.setItem('user', JSON.stringify(local));
                         local = {
