@@ -132,18 +132,18 @@
               <v-radio label="Presencial" value="PRESENCIAL"></v-radio>
             </v-radio-group>
 
-            <v-text-field
-              v-model="formData.cliente_nome"
-              id="txtClienteNome"
-              :rules="[
-                (v) => !!v || 'Informe o nome do cliente!',
-                (v) =>
-                  (v && v.length <= 50) ||
-                  'Nome do cliente deve ter menos de 50 caracteres',
-              ]"
-              label="Nome do Cliente"
-              counter="50"
+            <v-autocomplete
+              v-model="formData.usuario_id"
+              :items="usuarios"
+              :search-input.sync="searchUsuarios"
+              :rules="[(v) => !!v || 'Informe o cliente!']"
+              label="Cliente"
+              no-data-text="Nenhum cliente..."
+              item-text="nome"
+              item-value="id"
+              id="txtUsuarioNome"
             />
+
             <v-autocomplete
               v-model="formData.pizza_id"
               :items="pizzas"
@@ -165,6 +165,14 @@
                 </v-list-item-content>
               </template>
             </v-autocomplete>
+            
+
+            <v-textarea
+              v-model="formData.observacao"
+              label="Observação"
+              :rules="[(v) => !!v || 'Digite uma observação!']"
+              id="txtObservacao"
+            />
           </v-form>
         </v-card-text>
 
@@ -201,11 +209,14 @@ export default {
       valid: true,
       formData: {
         valor: null,
-        cliente_nome: null,
+        usuario_id: null,
         pizza_id: null,
+        observacao: null,
         tipo: "TELEFONE",
       },
       pizzas: [],
+      usuarios: [],
+      searchUsuarios: null
     };
   },
   async fetch() {
@@ -230,11 +241,17 @@ export default {
   },
   mounted() {
     this.$fetch();
+    this.getUsuarios()
     this.$axios
       .get("/pizza??pagina=1&limite=200&atributo=descricao&ordem=ASC")
       .then((res) => {
         this.pizzas = res.data.data;
       });
+  },
+  watch: {
+    searchUsuarios(val){
+      this.getUsuarios(val)
+    }
   },
   methods: {
     orderChange(evt, name) {
@@ -277,8 +294,10 @@ export default {
     clearForm() {
       this.formData = {
         valor: null,
-        cliente_nome: null,
+        usuario_id: null,
         pizza_id: null,
+        observacao: null,
+        tipo: "TELEFONE",
       };
       if (this.$refs.form) this.$refs.form.reset();
     },
@@ -290,6 +309,13 @@ export default {
         });
       }
     },
+    getUsuarios(val=''){
+      this.$axios
+        .get("/usuario?pagina=1&limite=20&tipo=CLIENTE&ordem=ASC&nome="+val)
+        .then((res) => {
+          this.usuarios = res.data.data;
+        })
+    }
   },
 };
 </script>
