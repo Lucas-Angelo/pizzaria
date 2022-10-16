@@ -100,6 +100,16 @@ export default {
             },
         };
     },
+    mounted() {
+       let local = JSON.parse(localStorage.getItem('user'));
+       if(local){
+        if(local.tipo=="ADMIN"){
+            this.$router.push("/pedidos");
+        }else{
+            this.$router.push("/telacliente");
+        }
+       }
+    },
     methods: {
         handleSubmit() {
             if (this.$refs.formulario.validate()) {

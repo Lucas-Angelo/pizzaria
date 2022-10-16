@@ -44,7 +44,7 @@
                   </td>
                 </tr>
                 <tr v-if="pedidosCliente.length == 0">
-                  <td align="center" colspan="3">Sem dados cadastrados</td>
+                  <td align="center" colspan="3">Você ainda não fez nenhum pedido</td>
                 </tr>
               </tbody>
             </template>
