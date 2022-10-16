@@ -10,6 +10,9 @@
               #{{ order.id}}
           </small>
           {{ order.pizza.descricao }} - {{ order.pizza.tamanho }}
+          <p v-if="order.observacao">
+            Obs: {{ order.observacao }}
+          </p>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn class="btn-options" small text v-bind="attrs" v-on="on">
@@ -53,7 +56,7 @@
     <hr class="order-line" />
     <v-row>
       <v-col>
-        <span>Cliente: {{ order.cliente_nome }}</span>
+        <span>Cliente: {{ order.usuario.nome }}</span>
       </v-col>
     </v-row>
   </div>
