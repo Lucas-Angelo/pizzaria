@@ -110,7 +110,20 @@ export default {
                         senha: this.senha,
                     })
                     .then((res) => {
-                        this.$router.push("/pedidos");
+                        console.log(res);
+                        let local = {}
+                        localStorage.setItem('user', JSON.stringify(local));
+                        local = {
+                            id: res.data.usuario.id,
+                            email: res.data.usuario.email,
+                            tipo: res.data.usuario.tipo
+                        }
+                        localStorage.setItem('user', JSON.stringify(local));
+                        if(res.data.usuario.tipo=="ADMIN"){
+                            this.$router.push("/pedidos");
+                        }else{
+                            this.$router.push("/telacliente");
+                        }
                     })
                     .catch((err) => {
                         this.erroLogin = err.response.data.message;

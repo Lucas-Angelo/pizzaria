@@ -108,8 +108,7 @@ export default {
   data() {
     return {
       usuario: {
-        usuarioId:1,
-        nome:"Teste"
+        usuarioId:null,
       },
       pedidos: [],
       pedidosCliente:[],
@@ -139,9 +138,15 @@ export default {
   },
 
   mounted() {
+    this.buscarCliente()
     this.$fetch();
   },
   methods: {
+    buscarCliente(){
+        let local = JSON.parse(localStorage.getItem('user'));
+        console.log(local);
+        this.usuario.usuarioId=local.id
+    },
     buscarPedidosUsuario(pedidos) {
         for (let i = 0; i<pedidos.length; i++){
             if(pedidos[i].usuario_id == this.usuario.usuarioId){
