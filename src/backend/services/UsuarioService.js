@@ -30,7 +30,12 @@ class UsuarioService {
     }
 
     async signin(email, senha) {
-        let usuario = await this.findByEmail(email, ["id", "email", "senha"]);
+        let usuario = await this.findByEmail(email, [
+            "id",
+            "email",
+            "senha",
+            "tipo",
+        ]);
 
         if (!usuario)
             throw new AppError("Usuário não encontrado!", 404, [
@@ -47,15 +52,17 @@ class UsuarioService {
         return usuario;
     }
 
-    async create(email, senha) {
+    async create(nome, email, senha, tipo) {
         if (await this.findByEmail(email))
             throw new AppError("Email já utilizado!", 422, [
                 `Usuário de 'email' ${email} já utilizado!`,
             ]);
 
         const usuario = await Usuario.create({
+            nome,
             email,
             senha,
+            tipo,
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -68,7 +75,7 @@ class UsuarioService {
         return usuario;
     }
 
-    async update(id, senha) {
+    async update(id, nome, senha) {
         const usuario = await Usuario.findOne({
             where: {
                 id: id,
@@ -84,6 +91,7 @@ class UsuarioService {
 
         await usuario
             .update({
+                nome,
                 senha,
             })
             .catch((error) => {

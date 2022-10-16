@@ -14,6 +14,12 @@ class Usuario extends Model {
                     required: true,
                     notEmpty: true,
                 },
+                nome: {
+                    field: "nome",
+                    type: DataTypes.STRING(100),
+                    allowNull: false,
+                    notEmpty: true,
+                },
                 email: {
                     field: "email",
                     type: DataTypes.STRING(60),
@@ -29,6 +35,12 @@ class Usuario extends Model {
                     type: DataTypes.STRING(50),
                     notEmpty: true,
                     allowNull: false,
+                },
+                tipo: {
+                    field: "tipo",
+                    type: DataTypes.ENUM("ADMIN", "CLIENTE"),
+                    allowNull: false,
+                    notEmpty: true,
                 },
                 created_at: {
                     type: DataTypes.DATE,

@@ -40,6 +40,10 @@ module.exports = {
                 foreignKey: "pizza_id",
                 as: "pizza",
             });
+            Pedido.belongsTo(Usuario, {
+                foreignKey: "usuario_id",
+                as: "usuario",
+            });
 
             if (process.env.APP_DEBUG) {
                 console.log(

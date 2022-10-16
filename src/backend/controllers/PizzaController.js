@@ -45,9 +45,7 @@ class PizzaController {
             image_url
         );
 
-        return response.status(201).json({
-            pizza,
-        });
+        return response.status(201).json(pizza);
     }
 
     async delete(request, response) {
@@ -61,6 +59,7 @@ class PizzaController {
 
     async update(request, response) {
         const scheme = yup.object().shape({
+            descricao: yup.string("'descricao' must be string").min(1).max(45),
             tamanho: yup.mixed().oneOf(pizzaTamanhoEnum),
             valor: yup.number().positive(),
             image_url: yup
@@ -76,12 +75,12 @@ class PizzaController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { valor, tamanho, image_url } = request.body;
+        const { descricao, valor, tamanho, image_url } = request.body;
         const id = request.params.id;
 
         const pizzaService = new PizzaService();
 
-        await pizzaService.update(id, valor, tamanho, image_url);
+        await pizzaService.update(id, descricao, valor, tamanho, image_url);
 
         return response.status(200).json({});
     }

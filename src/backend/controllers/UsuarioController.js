@@ -17,9 +17,10 @@ class UsuarioController {
         }
 
         const { email, senha } = request.body;
+        const tipo = "CLIENTE";
 
         const usuarioService = new UsuarioService();
-        const usuario = await usuarioService.signin(email, senha);
+        const usuario = await usuarioService.signin(email, senha, tipo);
 
         return response.status(200).send({
             usuario,
@@ -28,6 +29,11 @@ class UsuarioController {
 
     async create(request, response) {
         const scheme = yup.object().shape({
+            nome: yup
+                .string("'nome' must be string")
+                .min(1)
+                .max(100)
+                .required("'nome' is a required field"),
             email: yup
                 .string("'email' must be string")
                 .email("'email' must be a email")
@@ -47,14 +53,13 @@ class UsuarioController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { email, senha } = request.body;
+        const { nome, email, senha } = request.body;
+        const tipo = "CLIENTE";
 
         const usuarioService = new UsuarioService();
-        const usuario = await usuarioService.create(email, senha);
+        const usuario = await usuarioService.create(nome, email, senha, tipo);
 
-        return response.status(201).json({
-            usuario,
-        });
+        return response.status(201).json(usuario);
     }
 
     async delete(request, response) {
@@ -68,6 +73,7 @@ class UsuarioController {
 
     async update(request, response) {
         const scheme = yup.object().shape({
+            nome: yup.string("'nome' must be string").min(1).max(100),
             senha: yup.string("'senha' must be string").min(8).max(50),
         });
 
@@ -77,12 +83,12 @@ class UsuarioController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { senha } = request.body;
+        const { nome, senha } = request.body;
         const id = request.params.id;
 
         const usuarioService = new UsuarioService();
 
-        await usuarioService.update(id, senha);
+        await usuarioService.update(id, nome, senha);
 
         return response.status(200).json({});
     }

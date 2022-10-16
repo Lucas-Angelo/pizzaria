@@ -4,6 +4,8 @@ const { SortPaginate } = require("../helpers/SortPaginate");
 const PizzaService = require("../services/PizzaService");
 const Pizza = require("../models/Pizza");
 const { Op, Sequelize } = require("sequelize");
+const UsuarioService = require("./UsuarioService");
+const Usuario = require("../models/Usuario");
 
 class PedidoService {
     async findById(id, attributes) {
@@ -19,7 +21,7 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, cliente_nome, pizza_id, tipo) {
+    async create(status, observacao, tipo, pizza_id, usuario_id) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -27,11 +29,19 @@ class PedidoService {
                 `Pizza de 'id' ${pizza_id} não encontrada!`,
             ]);
 
+        const usuarioService = new UsuarioService();
+        const usuario = await usuarioService.findById(usuario_id);
+        if (!usuario)
+            throw new AppError("Usuario não encontrado!", 422, [
+                `Usuario de 'id' ${usuario_id} não encontrado!`,
+            ]);
+
         const pedido = await Pedido.create({
             status,
-            cliente_nome,
-            pizza_id,
+            observacao,
             tipo,
+            pizza_id,
+            usuario_id,
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -44,7 +54,7 @@ class PedidoService {
         return pedido;
     }
 
-    async update(id, status, cliente_nome, tipo) {
+    async update(id, status, observacao, tipo) {
         const pedido = await Pedido.findOne({
             where: {
                 id: id,
@@ -61,7 +71,7 @@ class PedidoService {
         await pedido
             .update({
                 status,
-                cliente_nome,
+                observacao,
                 tipo,
             })
             .catch((error) => {
@@ -101,11 +111,11 @@ class PedidoService {
         if (query.status) where.status = query.status;
         if (query.pizza_id) where.pizza_id = query.pizza_id;
         if (query.tipo) where.tipo = query.tipo;
-        if (query.cliente_nome) {
-            where.cliente_nome = Sequelize.where(
-                Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`cliente_nome`")),
+        if (query.observacao) {
+            where.observacao = Sequelize.where(
+                Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`observacao`")),
                 "LIKE",
-                "%" + query.cliente_nome.toLowerCase() + "%"
+                "%" + query.observacao.toLowerCase() + "%"
             );
         }
         if (query.created_at_start || query.created_at_end) {
@@ -127,7 +137,10 @@ class PedidoService {
 
         const pedidos = await Pedido.findAndCountAll({
             ...SortPaginateOptions,
-            include: [{ model: Pizza, as: "pizza" }],
+            include: [
+                { model: Pizza, as: "pizza" },
+                { model: Usuario, as: "usuario" },
+            ],
             where,
         }).catch(function (error) {
             console.log(error);

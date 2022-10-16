@@ -9,20 +9,24 @@ const tipoPedidoEnum = ["PRESENCIAL", "TELEFONE"];
 class PedidoController {
     async create(request, response) {
         const scheme = yup.object().shape({
-            cliente_nome: yup
-                .string("'cliente_nome' must be string")
+            observacao: yup
+                .string("'observacao' must be string")
                 .min(1)
-                .max(50)
-                .required("'cliente_nome' is a required field"),
+                .max(255),
+            tipo: yup
+                .mixed()
+                .oneOf(tipoPedidoEnum)
+                .required("'tipo' is a required field"),
             pizza_id: yup
                 .number()
                 .positive()
                 .integer()
                 .required("'pizza_id' is a required field"),
-            tipo: yup
-                .mixed()
-                .oneOf(tipoPedidoEnum)
-                .required("'tipo' is a required field"),
+            usuario_id: yup
+                .number()
+                .positive()
+                .integer()
+                .required("'usuario_id' is a required field"),
         });
 
         try {
@@ -31,20 +35,19 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { cliente_nome, pizza_id, tipo } = request.body;
+        const { observacao, pizza_id, tipo, usuario_id } = request.body;
         const status = "PENDENTE";
 
         const pedidoService = new PedidoService();
         const pedido = await pedidoService.create(
             status,
-            cliente_nome,
+            observacao,
+            tipo,
             pizza_id,
-            tipo
+            usuario_id
         );
 
-        return response.status(201).json({
-            pedido,
-        });
+        return response.status(201).json(pedido);
     }
 
     async delete(request, response) {
@@ -60,10 +63,10 @@ class PedidoController {
         const scheme = yup.object().shape({
             status: yup.mixed().oneOf(pedidoStatusEnum),
             tipo: yup.mixed().oneOf(tipoPedidoEnum),
-            cliente_nome: yup
-                .string("'cliente_nome' must be string")
+            observacao: yup
+                .string("'observacao' must be string")
                 .min(1)
-                .max(50),
+                .max(255),
         });
 
         try {
@@ -72,12 +75,12 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { status, cliente_nome, tipo } = request.body;
+        const { status, observacao, tipo } = request.body;
         const id = request.params.id;
 
         const pedidoService = new PedidoService();
 
-        await pedidoService.update(id, status, cliente_nome, tipo);
+        await pedidoService.update(id, status, observacao, tipo);
 
         return response.status(200).json({});
     }
