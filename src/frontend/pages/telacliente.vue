@@ -105,6 +105,7 @@
 import Swal from "sweetalert2";
 export default {
   name: "PedidosCliente",
+  layout: "cliente",
   data() {
     return {
       usuario: {
