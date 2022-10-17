@@ -21,7 +21,7 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, observacao, tipo, pizza_id, usuario_id) {
+    async create(status, observacao, tipo, pizza_id, usuario_id,telefone,logradouro) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -42,6 +42,8 @@ class PedidoService {
             tipo,
             pizza_id,
             usuario_id,
+            telefone,
+            logradouro,
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -54,7 +56,7 @@ class PedidoService {
         return pedido;
     }
 
-    async update(id, status, observacao, tipo) {
+    async update(id, status, observacao, tipo, telefone,logradouro) {
         const pedido = await Pedido.findOne({
             where: {
                 id: id,
@@ -73,6 +75,8 @@ class PedidoService {
                 status,
                 observacao,
                 tipo,
+                telefone,
+                logradouro,
             })
             .catch((error) => {
                 throw new AppError("Erro interno do servidor!", 500, error);
@@ -111,6 +115,8 @@ class PedidoService {
         if (query.status) where.status = query.status;
         if (query.pizza_id) where.pizza_id = query.pizza_id;
         if (query.tipo) where.tipo = query.tipo;
+        if (query.telefone) where.telefone = query.telefone;
+        if (query.logradouro) where.logradouro = query.logradouro;
         if (query.observacao) {
             where.observacao = Sequelize.where(
                 Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`observacao`")),
