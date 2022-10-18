@@ -14,7 +14,13 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="app-text" v-text="item.title" />
+            <v-list-item-title
+              @click="logout()"
+              v-if="item.title == 'Sair'"
+              class="app-text"
+              v-text="item.title"
+            />
+            <v-list-item-title v-else class="app-text" v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -47,11 +53,6 @@ export default {
           to: "/pedidos",
         },
         {
-          icon: "mdi-silverware",
-          title: "Cardapio",
-          to: "/cardapio",
-        },
-        {
           icon: "mdi-pizza",
           title: "Pizzas",
           to: "/pizza",
@@ -66,9 +67,20 @@ export default {
           title: "Relatório",
           to: "/relatorio",
         },
+        {
+          icon: "mdi-logout",
+          title: "Sair",
+          to: "/login",
+        },
       ],
       title: "Pizzaria Sem Nome",
     };
+  },
+  methods: {
+    logout() {
+      let local = {};
+      localStorage.setItem("user", JSON.stringify(local));
+    },
   },
 };
 </script>

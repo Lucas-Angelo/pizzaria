@@ -120,7 +120,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
+            <v-btn id="btnCancelar" text @click="dialog = false">
+              Cancelar
+            </v-btn>
 
             <v-btn color="primary" id="btnSubmit" @click="submit">
               {{ formData.id ? "Salvar" : "Criar" }}
@@ -147,14 +149,14 @@ export default {
         descricao: null,
         tamanho: null,
         image_url: null,
-        valor: null
+        valor: null,
       },
       valid: true,
     };
   },
   async fetch() {
     this.$axios
-      .get("/pizza??pagina=1&limite=100&atributo=descricao&ordem=ASC")
+      .get("/pizza?pagina=1&limite=100&atributo=descricao&ordem=ASC")
       .then((res) => {
         this.pizzas = res.data.data;
         this.pizzasPages = res.data.pages;
@@ -187,7 +189,7 @@ export default {
         descricao: null,
         tamanho: null,
         image_url: null,
-        valor: null
+        valor: null,
       };
       if (this.$refs.form) this.$refs.form.reset();
     },
