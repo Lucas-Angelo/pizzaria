@@ -1,7 +1,7 @@
 const AppError = require("../errors/AppError");
 const Pizza = require("../models/Pizza");
 const { SortPaginate } = require("../helpers/SortPaginate");
-
+const { buildWhere } = require("../helpers/pizza");
 class PizzaService {
     async findById(id, attributes) {
         const pizza = await Pizza.findOne({
@@ -104,15 +104,16 @@ class PizzaService {
 
     async getAll(query) {
         const attributes = Object.keys(Pizza.getAttributes());
-
+        const { ordem, pagina, limite, atributo, ...whereFilter } = query;
         const pizzaQuantity = await Pizza.count();
         const { paginas, ...SortPaginateOptions } = SortPaginate(
-            query,
+            { ordem, pagina, limite, atributo },
             attributes,
             pizzaQuantity
         );
-
+        const where = buildWhere(whereFilter);
         const pizzas = await Pizza.findAndCountAll({
+            where,
             ...SortPaginateOptions,
         }).catch(function (error) {
             throw new AppError("Erro interno do servidor!", 500, error);
