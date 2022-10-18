@@ -33,18 +33,6 @@
       <v-col cols="12" sm="4" v-for="item in pizzas" :key="item.name">
         <v-hover v-slot="{ hover }" open-delay="200">
           <v-card color="red lighten-5" :elevation="hover ? 16 : 2">
-            <v-app-bar flat color="rgba(0,0,0,0)">
-              <v-chip class="ma-2" color="black" text-color="white" dense>
-                <v-avatar left>
-                  <v-icon color="yellow"> mdi-star </v-icon>
-                </v-avatar>
-                4.2
-              </v-chip>
-              <v-spacer></v-spacer>
-              <v-btn fab x-small color="white"
-                ><v-icon> mdi-heart </v-icon></v-btn
-              >
-            </v-app-bar>
             <div class="d-flex flex-column justify-space-between align-center">
               <v-img
                 :src="item.image_url"
