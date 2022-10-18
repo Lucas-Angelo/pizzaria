@@ -76,7 +76,7 @@
 <script>
 import image from "/static/pizza.png";
 export default {
-  layout: "empty",
+  layout: "cliente",
   name: "Login",
   data() {
     return {
@@ -97,7 +97,7 @@ export default {
         if (local.tipo == "ADMIN") {
           this.$router.push("/pedidos");
         } else {
-          this.$router.push("/telacliente");
+          this.$router.push("/cardapio");
         }
       }
     }
@@ -123,7 +123,7 @@ export default {
             if (res.data.usuario.tipo == "ADMIN") {
               this.$router.push("/pedidos");
             } else {
-              this.$router.push("/telacliente");
+              this.$router.push("/cardapio");
             }
           })
           .catch((err) => {

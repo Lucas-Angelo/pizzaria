@@ -1,15 +1,10 @@
 <template>
   <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :clipped="true"
-      fixed
-      app
-    >
+    <v-navigation-drawer v-model="drawer" :clipped="true" fixed app>
       <v-list>
         <v-list-item
           v-for="(item, i) in items"
-          :id="'btnMenu'+i"
+          :id="'btnMenu' + i"
           :key="i"
           :to="item.to"
           router
@@ -19,19 +14,20 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title @click="logout()" v-if="item.title=='Sair'" class="app-text" v-text="item.title" />
+            <v-list-item-title
+              @click="logout()"
+              v-if="item.title == 'Sair'"
+              class="app-text"
+              v-text="item.title"
+            />
             <v-list-item-title v-else class="app-text" v-text="item.title" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="true"
-      fixed
-      app
-    >
+    <v-app-bar :clipped-left="true" fixed app>
       <v-app-bar-nav-icon id="btnOpenMenu" @click.stop="drawer = !drawer" />
-      <img width="30px" src="/pizza.png" alt="">
+      <img width="30px" src="/pizza.png" alt="" />
       <v-toolbar-title class="app-title" v-text="title" />
       <v-spacer />
     </v-app-bar>
@@ -45,46 +41,46 @@
 
 <script>
 export default {
-  name: 'DefaultLayout',
-  data () {
+  name: "DefaultLayout",
+  data() {
     return {
       clipped: false,
       drawer: false,
       items: [
         {
-          icon: 'mdi-pizza',
-          title: 'Cardápio',
-          to: '/cardapio'
+          icon: "mdi-silverware",
+          title: "Cardápio",
+          to: "/cardapio",
         },
         {
-          icon: 'mdi-account',
-          title: 'Meus Pedidos',
-          to: '/telacliente'
+          icon: "mdi-account",
+          title: "Meus Pedidos",
+          to: "/telacliente",
         },
         {
-          icon: 'mdi-logout',
-          title: 'Sair',
-          to: '/login'
-        }
+          icon: "mdi-logout",
+          title: "Sair",
+          to: "/login",
+        },
       ],
-      title: 'Pizzaria Sem Nome'
-    }
+      title: "Pizzaria Sem Nome",
+    };
   },
   methods: {
-    logout(){
-      let local = {}
-      localStorage.setItem('user', JSON.stringify(local));
-    }
+    logout() {
+      let local = {};
+      localStorage.setItem("user", JSON.stringify(local));
+    },
   },
-}
+};
 </script>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Secular+One&display=swap');
-  .app{
-    &-title{
-      font-family: 'Secular One', sans-serif;
-      color: rgb(209, 61, 61);
-    }
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+.app {
+  &-title {
+    font-family: "Secular One", sans-serif;
+    color: rgb(209, 61, 61);
   }
+}
 </style>
