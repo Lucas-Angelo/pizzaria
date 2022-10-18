@@ -87,6 +87,7 @@
 
 <script>
 export default {
+  layout: "cliente",
   name: "Pizzas",
   data() {
     return {
