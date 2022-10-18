@@ -33,18 +33,28 @@
               <tbody>
                 <tr v-for="item in pedidosCliente" :key="item.name">
                   <td>{{ item.pizza.descricao }}</td>
-                  <td v-if="checarDecimal(item.pizza.valor)">R${{ item.pizza.valor }}</td>
+                  <td v-if="checarDecimal(item.pizza.valor)">
+                    R${{ item.pizza.valor }}
+                  </td>
                   <td v-else>R${{ item.pizza.valor }}.00</td>
                   <td>{{ item.status }}</td>
                   <td>
-                    <v-btn id="btnDelete" outlined small color="error" @click="remove(item)">
+                    <v-btn
+                      id="btnDelete"
+                      outlined
+                      small
+                      color="error"
+                      @click="remove(item)"
+                    >
                       <v-icon small>mdi-delete</v-icon>
                       Cancelar
                     </v-btn>
                   </td>
                 </tr>
                 <tr v-if="pedidosCliente.length == 0">
-                  <td align="center" colspan="3">Você ainda não fez nenhum pedido</td>
+                  <td align="center" colspan="3">
+                    Você ainda não fez nenhum pedido
+                  </td>
                 </tr>
               </tbody>
             </template>
@@ -53,50 +63,57 @@
       </v-row>
       <!-- Usuario creation modal -->
       <v-dialog v-model="dialog" max-width="450">
-      <v-card>
-        <v-card-title class="text-h5"> Cadastrar novo pedido </v-card-title>
+        <v-card>
+          <v-card-title class="text-h5"> Cadastrar novo pedido </v-card-title>
 
-        <v-card-text>
-          <v-form ref="form" v-model="valid" lazy-validation>
-            <v-radio-group id="radioPedidoTipo" v-model="formData.tipo" row mandatory>
-              <v-radio label="Telefone" value="TELEFONE"></v-radio>
-              <v-radio label="Presencial" value="PRESENCIAL"></v-radio>
-            </v-radio-group>
-            <v-autocomplete
-              v-model="formData.pizza_id"
-              :items="pizzas"
-              :rules="[(v) => !!v || 'Informe a pizza!']"
-              label="Pizza"
-              no-data-text="Nenhuma pizza cadastrada..."
-              item-text="descricao"
-              item-value="id"
-              id="txtPizzaNome"
-            >
-              <template v-slot:item="data">
-                <v-list-item-content>
-                  <img
-                    :src="data.item.image_url"
-                    style="max-width: 50px"
-                    alt=""
-                  />
-                  &nbsp;{{ data.item.descricao }}
-                </v-list-item-content>
-              </template>
-            </v-autocomplete>
-          </v-form>
-        </v-card-text>
+          <v-card-text>
+            <v-form ref="form" v-model="valid" lazy-validation>
+              <v-radio-group
+                id="radioPedidoTipo"
+                v-model="formData.tipo"
+                row
+                mandatory
+              >
+                <v-radio label="Telefone" value="TELEFONE"></v-radio>
+                <v-radio label="Presencial" value="PRESENCIAL"></v-radio>
+              </v-radio-group>
+              <v-autocomplete
+                v-model="formData.pizza_id"
+                :items="pizzas"
+                :rules="[(v) => !!v || 'Informe a pizza!']"
+                label="Pizza"
+                no-data-text="Nenhuma pizza cadastrada..."
+                item-text="descricao"
+                item-value="id"
+                id="txtPizzaNome"
+              >
+                <template v-slot:item="data">
+                  <v-list-item-content>
+                    <img
+                      :src="data.item.image_url"
+                      style="max-width: 50px"
+                      alt=""
+                    />
+                    &nbsp;{{ data.item.descricao }}
+                  </v-list-item-content>
+                </template>
+              </v-autocomplete>
+            </v-form>
+          </v-card-text>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
+          <v-card-actions>
+            <v-spacer></v-spacer>
 
-          <v-btn id="btnCancelar" text @click="dialog = false">
-            Cancelar
-          </v-btn>
+            <v-btn id="btnCancelar" text @click="dialog = false">
+              Cancelar
+            </v-btn>
 
-          <v-btn id="btnSubmit" color="primary" @click="submit"> Criar </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+            <v-btn id="btnSubmit" color="primary" @click="submit">
+              Criar
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-col>
   </v-row>
 </template>
@@ -109,13 +126,13 @@ export default {
   data() {
     return {
       usuario: {
-        usuarioId:null,
+        usuarioId: null,
       },
       pedidos: [],
-      pedidosCliente:[],
+      pedidosCliente: [],
       detalhePedidos: [],
       pedidosPages: 1,
-      pizzas:[],
+      pizzas: [],
       dialog: false,
       formData: {
         usuario_id: null,
@@ -131,46 +148,50 @@ export default {
     this.$axios
       .get("/pedido?pagina=1&limite=5&atributo=id&ordem=ASC")
       .then((res) => {
-        this.pedidosPage = res.data.page
-        this.pedidosCliente = []
-        this.buscarPedidosUsuario(res.data.data)
-        this.buscarPizzas()
+        this.pedidosPage = res.data.page;
+        this.pedidosCliente = [];
+        this.buscarPedidosUsuario(res.data.data);
+        this.buscarPizzas();
       });
   },
 
   mounted() {
-    this.buscarCliente()
+    this.buscarCliente();
     this.$fetch();
   },
   methods: {
-    buscarCliente(){
-        let local = JSON.parse(localStorage.getItem('user'));
-        this.usuario.usuarioId=local.id
+    buscarCliente() {
+      if (localStorage.getItem("user") !== null) {
+        let local = JSON.parse(localStorage.getItem("user"));
+        this.usuario.usuarioId = local.id;
+      } else {
+        this.$router.push("/login");
+      }
     },
     buscarPedidosUsuario(pedidos) {
-        for (let i = 0; i<pedidos.length; i++){
-            if(pedidos[i].usuario_id == this.usuario.usuarioId){
-                this.pedidosCliente.push(pedidos[i])
-            }
-        } 
-    },
-    buscarPizzas(){
-        this.$axios
-            .get("/pizza??pagina=1&limite=200&atributo=descricao&ordem=ASC")
-            .then((res) => {
-                this.pizzas = res.data.data;
-            });
-    },
-    checarDecimal(value){
-        let split = value.toString().split(".")
-        if(split.length>1){
-            return true
+      for (let i = 0; i < pedidos.length; i++) {
+        if (pedidos[i].usuario_id == this.usuario.usuarioId) {
+          this.pedidosCliente.push(pedidos[i]);
         }
-        return false
+      }
+    },
+    buscarPizzas() {
+      this.$axios
+        .get("/pizza??pagina=1&limite=200&atributo=descricao&ordem=ASC")
+        .then((res) => {
+          this.pizzas = res.data.data;
+        });
+    },
+    checarDecimal(value) {
+      let split = value.toString().split(".");
+      if (split.length > 1) {
+        return true;
+      }
+      return false;
     },
     submit() {
-      this.formData.name=this.usuario.name
-      this.formData.usuario_id=this.usuario.usuarioId
+      this.formData.name = this.usuario.name;
+      this.formData.usuario_id = this.usuario.usuarioId;
       if (this.$refs.form.validate()) {
         this.$axios.post("/pedido", this.formData).then(() => {
           this.$fetch();
