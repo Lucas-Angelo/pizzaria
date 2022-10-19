@@ -89,7 +89,7 @@ export default {
   async fetch() {
     this.$axios
       .get(
-        `/pizza??pagina=${this.pagina}&limite=100&atributo=descricao&ordem=ASC`
+        `/pizza?pagina=${this.pagina}&limite=100&atributo=descricao&ordem=ASC`
       )
       .then((res) => {
         this.pizzas = res.data.data;

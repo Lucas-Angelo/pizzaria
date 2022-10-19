@@ -177,7 +177,7 @@ export default {
     },
     buscarPizzas() {
       this.$axios
-        .get("/pizza??pagina=1&limite=200&atributo=descricao&ordem=ASC")
+        .get("/pizza?pagina=1&limite=200&atributo=descricao&ordem=ASC")
         .then((res) => {
           this.pizzas = res.data.data;
         });

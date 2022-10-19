@@ -127,7 +127,12 @@
 
         <v-card-text>
           <v-form ref="form" v-model="valid" lazy-validation>
-            <v-radio-group id="radioPedidoTipo" v-model="formData.tipo" row mandatory>
+            <v-radio-group
+              id="radioPedidoTipo"
+              v-model="formData.tipo"
+              row
+              mandatory
+            >
               <v-radio label="Telefone" value="TELEFONE"></v-radio>
               <v-radio label="Presencial" value="PRESENCIAL"></v-radio>
             </v-radio-group>
@@ -165,7 +170,6 @@
                 </v-list-item-content>
               </template>
             </v-autocomplete>
-            
 
             <v-textarea
               v-model="formData.observacao"
@@ -216,7 +220,7 @@ export default {
       },
       pizzas: [],
       usuarios: [],
-      searchUsuarios: null
+      searchUsuarios: null,
     };
   },
   async fetch() {
@@ -241,17 +245,17 @@ export default {
   },
   mounted() {
     this.$fetch();
-    this.getUsuarios()
+    this.getUsuarios();
     this.$axios
-      .get("/pizza??pagina=1&limite=200&atributo=descricao&ordem=ASC")
+      .get("/pizza?pagina=1&limite=200&atributo=descricao&ordem=ASC")
       .then((res) => {
         this.pizzas = res.data.data;
       });
   },
   watch: {
-    searchUsuarios(val){
-      this.getUsuarios(val)
-    }
+    searchUsuarios(val) {
+      this.getUsuarios(val);
+    },
   },
   methods: {
     orderChange(evt, name) {
@@ -309,13 +313,13 @@ export default {
         });
       }
     },
-    getUsuarios(val=''){
+    getUsuarios(val = "") {
       this.$axios
-        .get("/usuario?pagina=1&limite=20&tipo=CLIENTE&ordem=ASC&nome="+val)
+        .get("/usuario?pagina=1&limite=20&tipo=CLIENTE&ordem=ASC&nome=" + val)
         .then((res) => {
           this.usuarios = res.data.data;
-        })
-    }
+        });
+    },
   },
 };
 </script>

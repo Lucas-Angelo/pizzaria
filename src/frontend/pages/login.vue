@@ -76,7 +76,7 @@
 <script>
 import image from "/static/pizza.png";
 export default {
-  layout: "cliente",
+  layout: "empty",
   name: "Login",
   data() {
     return {
