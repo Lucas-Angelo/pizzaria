@@ -60,6 +60,18 @@
           <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation>
               <v-text-field
+                v-model="formData.nome"
+                id="txtNome"
+                :rules="[
+                  (v) => !!v || 'Nome é obrigatório!',
+                  (v) =>
+                    (v && v.length <= 100) ||
+                    'Nome deve ter menos de 100 caracteres',
+                ]"
+                label="Nome"
+                counter="100"
+              />
+              <v-text-field
                 v-if="!formData.id"
                 v-model="formData.email"
                 id="txtEmail"
@@ -151,11 +163,12 @@ export default {
       if (this.$refs.form) this.$refs.form.reset();
     },
     async edit(usuario) {
-      this.clearForm();
+      await this.clearForm();
       this.formData = {
         id: usuario.id,
         email: usuario.email,
-        senha: usuario.senha
+        nome: usuario.nome,
+        senha: null
       };
       this.dialog = true;
     },
