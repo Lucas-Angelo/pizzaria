@@ -135,7 +135,7 @@
               </thead>
               <tbody>
                 <tr v-for="item in orders" :key="item.name">
-                  <td>{{ item.cliente_nome }}</td>
+                  <td>{{ item.usuario.nome }}</td>
                   <td>{{ capitalizeFirstLetter(item.status) }}</td>
                   <td>{{ capitalizeFirstLetter(item.tipo) }}</td>
                   <td>{{ item.pizza.descricao }}</td>
@@ -203,7 +203,6 @@ export default {
       return `${day}/${month}/${year}`;
     },
     changeContent(page = 1){
-      console.log(page)
       let dtStart = this.dateBegin ? new Date(this.dateBegin).toISOString().split('T')[0] + ' 00:00' : ''
       let dtEnd = this.dateEnd ? new Date(this.dateEnd).toISOString().split('T')[0] + ' 23:59' : ''
       this.$axios.get(`pedido?pagina=${page}&limite=20&status=${this.status}&tipo=${this.tipo}&created_at_start=${dtStart}&created_at_end=${dtEnd}`).then((res) => {
