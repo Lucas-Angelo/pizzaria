@@ -5,6 +5,7 @@
       <v-row>
         <v-col cols="12" sm="10">
           <v-text-field
+            v-model="search"
             id="txtPesquisa"
             label="Pesquisa"
             filled
@@ -13,10 +14,11 @@
             solo
             flat
             background-color="grey lighten-3"
+            @keypress.enter.stop="findPizza"
           ></v-text-field>
         </v-col>
         <v-col cols="12" sm="2">
-          <v-btn id="btnPesquisar">
+          <v-btn id="btnPesquisar" @click="findPizza">
             <v-icon> mdi-filter </v-icon> Pesquisar
           </v-btn>
         </v-col>
@@ -79,6 +81,7 @@ export default {
   name: "Pizzas",
   data() {
     return {
+      search: null,
       pizzas: [],
       total: 0,
       pagina: 1,
@@ -100,7 +103,19 @@ export default {
   mounted() {
     this.$fetch();
   },
-  methods: {},
+  methods: {
+    findPizza(){
+      this.$axios
+        .get(
+          `/pizza?pagina=${this.pagina}&limite=100&atributo=descricao&ordem=ASC&descricao=${this.search}`
+        )
+        .then((res) => {
+          this.pizzas = res.data.data;
+          this.pizzasPages = res.data.pages;
+          this.total = res.data.total;
+        });
+    }
+  },
 };
 </script>
 
