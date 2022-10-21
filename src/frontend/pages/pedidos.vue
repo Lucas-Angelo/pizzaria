@@ -171,6 +171,23 @@
               </template>
             </v-autocomplete>
 
+            <v-text-field
+            v-model="formData.telefone" 
+            label="Telefone"
+            :rules="[ (v) => (formData.tipo == 'TELEFONE' && !!v) || 'Informe o telefone!' ,
+                      v =>  (v || '').length < 10 || 'Telefone deve conter no máximo 9 caracteres']" 
+            id="txtTelefone"
+           />
+
+            <v-text-field
+            v-model="formData.logradouro" 
+            label="Logradouro" 
+            :rules="[(v) => (!!v && formData.tipo == 'TELEFONE') || 'Informe o logradouro!',
+             v => (v || '').length < 255 || 'Logradouro deve conter no máximo 255 caracteres']" 
+            id="txtLogradouro"
+             />
+
+
             <v-textarea
               v-model="formData.observacao"
               label="Observação"
@@ -217,6 +234,8 @@ export default {
         pizza_id: null,
         observacao: null,
         tipo: "TELEFONE",
+        logradouro: "",
+        telefone: ""
       },
       pizzas: [],
       usuarios: [],
