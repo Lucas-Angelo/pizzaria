@@ -56,6 +56,18 @@ class Pedido extends Model {
                         key: "id",
                     },
                 },
+                telefone: {
+                    field: "telefone",
+                    type: DataTypes.STRING(9),
+                    allowNull: true,
+                    notEmpty: false,
+                },
+                logradouro: {
+                    field: "logradouro",
+                    type: DataTypes.STRING(255),
+                    allowNull: true,
+                    notEmpty: false,
+                },
                 created_at: {
                     type: DataTypes.DATE,
                     field: "created_at",

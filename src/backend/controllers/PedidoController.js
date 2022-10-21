@@ -27,6 +27,14 @@ class PedidoController {
                 .positive()
                 .integer()
                 .required("'usuario_id' is a required field"),
+            telefone:yup
+                .string("'telefone' must be string")
+                .min(9)
+                .max(9),
+            logradouro: yup
+                .string("'logradouro' must be string")
+                .min(1)
+                .max(255),
         });
 
         try {
@@ -35,7 +43,7 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { observacao, pizza_id, tipo, usuario_id } = request.body;
+        const { observacao, pizza_id, tipo, usuario_id,telefone,logradouro} = request.body;
         const status = "PENDENTE";
 
         const pedidoService = new PedidoService();
@@ -44,7 +52,9 @@ class PedidoController {
             observacao,
             tipo,
             pizza_id,
-            usuario_id
+            usuario_id,
+            telefone,
+            logradouro
         );
 
         return response.status(201).json(pedido);
@@ -75,12 +85,12 @@ class PedidoController {
             throw new AppError(error.name, 422, error.errors);
         }
 
-        const { status, observacao, tipo } = request.body;
+        const { status, observacao, tipo,telefone,logradouro } = request.body;
         const id = request.params.id;
 
         const pedidoService = new PedidoService();
 
-        await pedidoService.update(id, status, observacao, tipo);
+        await pedidoService.update(id, status, observacao, tipo,telefone,logradouro);
 
         return response.status(200).json({});
     }
