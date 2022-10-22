@@ -325,7 +325,6 @@ export default {
     },
     submit() {
       if (this.$refs.form.validate()) {
-        console.log(this.formData);
         this.$axios.post("/pedido", this.formData).then(() => {
           this.$fetch();
           this.dialog = false;
