@@ -21,8 +21,10 @@ USE `pizza` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `pizza`.`usuario` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(100) NOT NULL,
   `email` VARCHAR(60) NOT NULL,
   `senha` VARCHAR(50) NOT NULL,
+  `tipo` ENUM('ADMIN', 'CLIENTE') NOT NULL,
   `created_at` TIMESTAMP NOT NULL,
   `updated_at` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`),
@@ -52,16 +54,25 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `pizza`.`pedido` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `status` ENUM('PENDENTE', 'PRODUCAO', 'CONCLUIDO') NOT NULL,
-  `cliente_nome` VARCHAR(50) NOT NULL,
   `tipo` ENUM('PRESENCIAL', 'TELEFONE') NOT NULL,
+  `observacao` VARCHAR(255) NULL,
   `created_at` TIMESTAMP NOT NULL,
   `updated_at` TIMESTAMP NOT NULL,
+  `telefone` VARCHAR(9) NULL,
+  `logradouro` VARCHAR(255) NULL,
   `pizza_id` INT UNSIGNED NOT NULL,
+  `usuario_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_pedido_pizza_idx` (`pizza_id` ASC) VISIBLE,
+  INDEX `fk_pedido_usuario1_idx` (`usuario_id` ASC) VISIBLE,
   CONSTRAINT `fk_pedido_pizza`
     FOREIGN KEY (`pizza_id`)
     REFERENCES `pizza`.`pizza` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_pedido_usuario1`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `pizza`.`usuario` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
