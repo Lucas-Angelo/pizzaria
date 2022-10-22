@@ -180,7 +180,7 @@ export default {
   },
   async fetch() {
     this.$axios
-      .get("/pedido?pagina=1&limite=5&atributo=id&ordem=ASC")
+      .get("/pedido?pagina=1&limite=100&atributo=id&ordem=ASC")
       .then((res) => {
         this.pedidosPage = res.data.page;
         this.pedidosCliente = [];
@@ -203,6 +203,7 @@ export default {
       }
     },
     buscarPedidosUsuario(pedidos) {
+      console.log(pedidos);
       for (let i = 0; i < pedidos.length; i++) {
         if (pedidos[i].usuario_id == this.usuario.usuarioId) {
           this.pedidosCliente.push(pedidos[i]);

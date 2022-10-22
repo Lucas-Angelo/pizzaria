@@ -36,7 +36,13 @@
                       <v-icon small>mdi-square-edit-outline</v-icon>
                       Editar
                     </v-btn>
-                    <v-btn id="btnDelete" outlined small color="error" @click="remove(item)">
+                    <v-btn
+                      id="btnDelete"
+                      outlined
+                      small
+                      color="error"
+                      @click="remove(item)"
+                    >
                       <v-icon small>mdi-delete</v-icon>
                       Apagar
                     </v-btn>
@@ -101,7 +107,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
 
-            <v-btn id="btnCancelar" text @click="dialog = false"> Cancelar </v-btn>
+            <v-btn id="btnCancelar" text @click="dialog = false">
+              Cancelar
+            </v-btn>
 
             <v-btn id="btnSubmit" color="primary" @click="submit">
               {{ formData.id ? "Salvar" : "Criar" }}
@@ -123,14 +131,14 @@ export default {
       usuarioPages: 1,
       dialog: false,
       formData: {
-        senha: null
+        senha: null,
       },
       valid: true,
     };
   },
   async fetch() {
     this.$axios
-      .get("/usuario?pagina=1&limite=5&atributo=email&ordem=DESC")
+      .get("/usuario?pagina=1&limite=100&atributo=email&ordem=DESC")
       .then((res) => {
         this.usuarios = res.data.data;
         this.usuarioPages = res.data.pages;
@@ -168,7 +176,7 @@ export default {
         id: usuario.id,
         email: usuario.email,
         nome: usuario.nome,
-        senha: null
+        senha: null,
       };
       this.dialog = true;
     },
