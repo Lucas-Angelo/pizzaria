@@ -6,13 +6,9 @@
       </v-col>
       <v-col :cols="10">
         <div class="order-description">
-          <small class="order-protocol">
-              #{{ order.id}}
-          </small>
+          <small class="order-protocol"> #{{ order.id }} </small>
           {{ order.pizza.descricao }} - {{ order.pizza.tamanho }}
-          <p v-if="order.observacao">
-            Obs: {{ order.observacao }}
-          </p>
+          <p v-if="order.observacao">Obs: {{ order.observacao }}</p>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn class="btn-options" small text v-bind="attrs" v-on="on">
@@ -51,12 +47,19 @@
           <small class="order-date"> {{ formatDate(order.created_at) }} </small>
         </div>
       </v-col>
-      
     </v-row>
     <hr class="order-line" />
     <v-row>
       <v-col>
         <span>Cliente: {{ order.usuario.nome }}</span>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <span v-if="order.telefone">Logradouro: {{ order.logradouro }}</span>
+      </v-col>
+      <v-col>
+        <span v-if="order.telefone">Telefone: {{ order.telefone }}</span>
       </v-col>
     </v-row>
   </div>
@@ -73,16 +76,25 @@ export default {
     },
   },
   methods: {
-    formatDate(date){
+    formatDate(date) {
       var inputDate = new Date(date);
       var todaysDate = new Date();
-      var isToday = (todaysDate.toDateString() == inputDate.toDateString());
-      if(isToday)
-        return `Hoje às ${inputDate.getHours().toString().padStart(2, '0')}:${inputDate.getMinutes().toString().padStart(2, '0')}`
+      var isToday = todaysDate.toDateString() == inputDate.toDateString();
+      if (isToday)
+        return `Hoje às ${inputDate
+          .getHours()
+          .toString()
+          .padStart(2, "0")}:${inputDate
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}`;
       else
-        return `${inputDate.getDate().toString().padStart(2, '0')}/${inputDate.getMonth().toString().padStart(2, '0')}`
-    }
-  }
+        return `${inputDate.getDate().toString().padStart(2, "0")}/${inputDate
+          .getMonth()
+          .toString()
+          .padStart(2, "0")}`;
+    },
+  },
 };
 </script>
 
@@ -93,22 +105,21 @@ export default {
   }
 }
 .order {
-  &-line{
+  &-line {
     border: 1px solid rgb(240, 240, 240);
   }
-  &-protocol{
+  &-protocol {
     color: rgb(160, 160, 160);
   }
-  &-description{
+  &-description {
     position: relative;
     min-height: 70px;
   }
-  &-date{
+  &-date {
     position: absolute;
     bottom: 0;
     right: 0;
     color: #333;
-    
   }
 }
 .border {
