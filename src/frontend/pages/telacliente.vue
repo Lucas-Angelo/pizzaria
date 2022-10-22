@@ -98,6 +98,40 @@
                   </v-list-item-content>
                 </template>
               </v-autocomplete>
+              <v-text-field
+                v-model="formData.telefone"
+                label="Telefone"
+                :rules="[
+                  formData.tipo == 'TELEFONE'
+                    ? (v) => !!v || 'Informe o telefone!'
+                    : null,
+                  (v) =>
+                    (v || '').length < 10 ||
+                    'Telefone deve conter no máximo 9 caracteres',
+                ]"
+                id="txtTelefone"
+              />
+
+              <v-text-field
+                v-model="formData.logradouro"
+                label="Logradouro"
+                :rules="[
+                  formData.tipo == 'PRESENCIAL'
+                    ? (v) => !!v || 'Informe o logradouro!'
+                    : null,
+                  (v) =>
+                    (v || '').length < 255 ||
+                    'Logradouro deve conter no máximo 255 caracteres',
+                ]"
+                id="txtLogradouro"
+              />
+
+              <v-textarea
+                v-model="formData.observacao"
+                label="Observação"
+                :rules="[(v) => !!v || 'Digite uma observação!']"
+                id="txtObservacao"
+              />
             </v-form>
           </v-card-text>
 
