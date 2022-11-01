@@ -7,7 +7,7 @@
             <v-card class="py-0" elevation="0">
               <v-row class="py-4" align="center" justify="center">
                 <v-img max-width="25%" :src="image" alt="pizza"></v-img>
-                <h1 id="title">Sem nome</h1>
+                <h1 id="title">PizzaPoint</h1>
               </v-row>
 
               <v-card-text>

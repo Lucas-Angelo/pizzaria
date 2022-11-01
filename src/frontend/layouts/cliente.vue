@@ -63,7 +63,7 @@ export default {
           to: "/login",
         },
       ],
-      title: "Pizzanharia",
+      title: "PizzaPoint",
     };
   },
   methods: {
