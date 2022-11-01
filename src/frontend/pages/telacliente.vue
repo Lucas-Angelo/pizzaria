@@ -203,7 +203,6 @@ export default {
       }
     },
     buscarPedidosUsuario(pedidos) {
-      console.log(pedidos);
       for (let i = 0; i < pedidos.length; i++) {
         if (pedidos[i].usuario_id == this.usuario.usuarioId) {
           this.pedidosCliente.push(pedidos[i]);

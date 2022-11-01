@@ -36,7 +36,6 @@ db.connect()
 
             // Unknown error
             if (process.env.APP_DEBUG) {
-                console.log(error);
                 return response.status(500).json({
                     status: "Error",
                     message: error.message,
@@ -53,13 +52,7 @@ db.connect()
         // Start standalone server if directly running
         if (require.main === module) {
             const port = process.env.NODE_PUBLIC_PORT || 3001;
-            app.listen(port, () => {
-                console.log(
-                    `Server on ---> http://${process.env.NODE_APP_HOST}:${port}/`
-                );
-            });
+            app.listen(port, () => {});
         }
     })
-    .catch((error) => {
-        console.log(error);
-    });
+    .catch(() => {});

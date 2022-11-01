@@ -44,18 +44,8 @@ module.exports = {
                 foreignKey: "usuario_id",
                 as: "usuario",
             });
-
-            if (process.env.APP_DEBUG) {
-                console.log(
-                    `Conexão com o banco de dados '${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}' estabelecida`
-                );
-            }
-        } catch (error) {
-            console.log(
-                `Não foi possível estabelecer a conexão com o banco de dados '${process.env.DB_HOST}/${process.env.DB_NAME}'`
-            );
-            console.log(error);
-        }
+            // eslint-disable-next-line no-empty
+        } catch (error) {}
     },
 
     async close() {

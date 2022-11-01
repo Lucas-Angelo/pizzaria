@@ -21,7 +21,15 @@ class PedidoService {
         return pedido;
     }
 
-    async create(status, observacao, tipo, pizza_id, usuario_id,telefone,logradouro) {
+    async create(
+        status,
+        observacao,
+        tipo,
+        pizza_id,
+        usuario_id,
+        telefone,
+        logradouro
+    ) {
         const pizzaService = new PizzaService();
         const pizza = await pizzaService.findById(pizza_id);
         if (!pizza)
@@ -43,7 +51,7 @@ class PedidoService {
             pizza_id,
             usuario_id,
             telefone,
-            logradouro
+            logradouro,
         }).catch((error) => {
             throw new AppError("Erro interno do servidor!", 500, error);
         });
@@ -56,7 +64,7 @@ class PedidoService {
         return pedido;
     }
 
-    async update(id, status, observacao, tipo, telefone,logradouro ) {
+    async update(id, status, observacao, tipo, telefone, logradouro) {
         const pedido = await Pedido.findOne({
             where: {
                 id: id,
@@ -76,7 +84,7 @@ class PedidoService {
                 observacao,
                 tipo,
                 telefone,
-                logradouro
+                logradouro,
             })
             .catch((error) => {
                 throw new AppError("Erro interno do servidor!", 500, error);
@@ -115,8 +123,8 @@ class PedidoService {
         if (query.status) where.status = query.status;
         if (query.pizza_id) where.pizza_id = query.pizza_id;
         if (query.tipo) where.tipo = query.tipo;
-        if(query.logradouro) where.logradouro = query.logradouro;
-        if(query.telefone) where.telefone = query.telefone;
+        if (query.logradouro) where.logradouro = query.logradouro;
+        if (query.telefone) where.telefone = query.telefone;
         if (query.observacao) {
             where.observacao = Sequelize.where(
                 Sequelize.fn("LOWER", Sequelize.col("`Pedido`.`observacao`")),
@@ -149,7 +157,6 @@ class PedidoService {
             ],
             where,
         }).catch(function (error) {
-            console.log(error);
             throw new AppError("Erro interno do servidor!", 500, error);
         });
         const valor_total = await Pedido.sum("valor", {
