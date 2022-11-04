@@ -1,2 +1,2 @@
-# pizzaria
+# Pizzapoint 🍕
 Pizza 😃👍
